@@ -1,0 +1,16 @@
+{
+  "name": "jonathanthom-com",
+  "version": "1.0.0",
+  "description": "Personal website for Jonathan Thom",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve -s .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Jonathan Thom",
+  "license": "ISC",
+  "dependencies": {
+    "serve": "^14.0.1"
+  }
+}

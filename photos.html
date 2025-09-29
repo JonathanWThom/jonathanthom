@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jonathan Thom - Photos</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        a.home-link {
+            display: block;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .photos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .photos img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .photos img:hover {
+            cursor: pointer;
+            opacity: 0.8;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .lightbox-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Photos</h1>
+        <a href="index.html" class="home-link">Home</a>
+        <div class="photos">
+            <img src="photos/optimized/E3725A1B-105B-43D2-B532-6F37F8255801.jpg" alt="E3725A1B-105B-43D2-B532-6F37F8255801">
+            <img src="photos/optimized/IMG_0496.jpg" alt="IMG_0496">
+            <img src="photos/optimized/IMG_0867.jpg" alt="IMG_0867">
+            <img src="photos/optimized/IMG_1404.jpg" alt="IMG_1404">
+            <img src="photos/optimized/IMG_8186.jpg" alt="IMG_8186">
+            <img src="photos/optimized/IMG_8192.jpg" alt="IMG_8192">
+        </div>
+    </div>
+    <div id="lightbox" class="lightbox">
+        <span class="close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
+    <script>
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const close = document.getElementsByClassName('close')[0];
+
+        document.querySelectorAll('.photos img').forEach(image => {
+            image.addEventListener('click', () => {
+                lightbox.style.display = 'block';
+                lightboxImg.src = image.src;
+            });
+        });
+
+        close.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target !== lightboxImg) {
+                lightbox.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
