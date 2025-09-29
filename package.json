@@ -4,7 +4,7 @@
   "description": "Personal website for Jonathan Thom",
   "main": "index.html",
   "scripts": {
-    "start": "serve -C .",
+    "start": "serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
