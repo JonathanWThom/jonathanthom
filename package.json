@@ -4,13 +4,13 @@
   "description": "Personal website for Jonathan Thom",
   "main": "index.html",
   "scripts": {
-    "start": "serve -s . -l 8080",
+    "start": "serve -s -C .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Jonathan Thom",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
     "serve": "^14.0.1"
   }
 }

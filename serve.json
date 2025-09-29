@@ -1,5 +1,0 @@
-{
-  "routes": [
-    { "src": "/photos/(.*)", "dest": "/photos/$1" }
-  ]
-}
