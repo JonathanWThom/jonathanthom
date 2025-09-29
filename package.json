@@ -10,7 +10,7 @@
   "keywords": [],
   "author": "Jonathan Thom",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "serve": "^14.0.1"
   }
 }
