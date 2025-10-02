@@ -25,15 +25,22 @@
             text-align: center;
             margin-bottom: 1rem;
         }
-        a.home-link {
-            display: block;
-            text-align: center;
+        nav {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
             margin-bottom: 2rem;
-            color: #e6e6e6;
+        }
+        nav a {
             text-decoration: none;
+            color: #e6e6e6;
+            font-size: 1.5rem;
+            position: relative;
+            transition: all 0.3s ease;
             font-weight: bold;
         }
-        a.home-link:hover, a.home-link:focus {
+        nav a:hover, nav a:focus {
             color: #ffc107;
             outline: 2px solid #ffc107;
             outline-offset: 5px;
@@ -94,7 +101,9 @@
 <body>
     <div class="container">
         <h1>Photos</h1>
-        <a href="index.html" class="home-link">Home</a>
+        <nav>
+            <a href="index.html" class="home-link">Home</a>
+        </nav>
         <div class="photos">
             <img src="photos/optimized/E3725A1B-105B-43D2-B532-6F37F8255801.jpg" alt="A black and white photo of a person walking on a sidewalk.">
             <img src="photos/optimized/IMG_0496.jpg" alt="A color photo of a building with a blue sky in the background.">
