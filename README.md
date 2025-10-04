@@ -4,19 +4,30 @@ This is the source code for my personal website, jonathanthom.com.
 
 ## Development
 
-This project uses [pnpm](https://pnpm.io/) as the package manager. To run the website locally:
-
-```bash
-pnpm install
-pnpm dev       # Development with auto-reload
-# or
-pnpm start     # Production server
-```
+This project uses [pnpm](https://pnpm.io/) as the package manager.
 
 ### Prerequisites
 
 - Node.js 24.9.0 (managed via `.node-version` and `.tool-versions` files)
 - pnpm 10.18.0+ (install with `npm install -g pnpm`)
+
+### Setup
+
+First-time setup (installs dependencies and Playwright browsers):
+
+```bash
+pnpm run setup
+```
+
+This command is idempotent and safe to run multiple times.
+
+### Running Locally
+
+```bash
+pnpm dev       # Development with auto-reload
+# or
+pnpm start     # Production server
+```
 
 ### Development Mode
 
@@ -87,6 +98,20 @@ This project uses [Pa11y](https://pa11y.org/) for automated accessibility testin
 ## Testing
 
 This project uses Jest for unit testing and Playwright for end-to-end testing.
+
+### Run All CI Tests Locally
+
+To run all tests that run in CI (linting, unit tests, E2E tests, and accessibility tests):
+
+```bash
+pnpm run ci
+```
+
+This command runs sequentially:
+1. Linting (CSS + HTML)
+2. Unit tests (Jest)
+3. E2E tests (Playwright)
+4. Accessibility tests (Pa11y)
 
 ### Unit Tests
 

@@ -4,6 +4,7 @@
   "description": "Personal website for Jonathan Thom",
   "main": "index.html",
   "scripts": {
+    "setup": "pnpm install && pnpm exec playwright install --with-deps chromium",
     "start": "serve",
     "dev": "browser-sync start --config bs-config.js",
     "test": "jest",
@@ -15,7 +16,8 @@
     "lint:html": "htmlhint \"**/*.html\"",
     "lint": "pnpm run lint:css && pnpm run lint:html",
     "lint:fix": "stylelint \"**/*.css\" --fix",
-    "test:a11y": "start-server-and-test start http://localhost:3000 \"pa11y http://localhost:3000\""
+    "test:a11y": "start-server-and-test start http://localhost:3000 \"pa11y http://localhost:3000\"",
+    "ci": "pnpm run lint && pnpm test && pnpm run test:e2e && pnpm run test:a11y"
   },
   "packageManager": "pnpm@10.18.0",
   "keywords": [],
