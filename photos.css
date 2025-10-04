@@ -1,0 +1,89 @@
+body {
+            font-family: 'IBM Plex Mono', monospace;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: #e6e6e6;
+        }
+        .container {
+            max-width: 960px;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+        h1 {
+            font-family: 'IBM Plex Mono', monospace;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        nav {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        nav a {
+            text-decoration: none;
+            color: #e6e6e6;
+            font-size: 1.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        nav a:hover, nav a:focus {
+            color: #ffc107;
+            outline: 2px solid #ffc107;
+            outline-offset: 5px;
+        }
+        .photos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .photos img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .photos img:hover {
+            cursor: pointer;
+            opacity: 0.8;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .lightbox-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
