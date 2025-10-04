@@ -1,4 +1,4 @@
-name: Deploy to Heroku
+name: CI/CD Pipeline
 
 on:
   push:
@@ -6,16 +6,48 @@ on:
       - main
 
 jobs:
-  deploy:
+  lint:
+    name: Lint Code
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
       - name: Install Dependencies
-        run: npm install
-      - name: Run Lint
+        run: npm ci
+      - name: Run Linters
         run: npm run lint
+
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - name: Install Dependencies
+        run: npm ci
       - name: Run Unit Tests
         run: npm test
+
+  e2e-tests:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - name: Install Dependencies
+        run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
       - name: Run E2E Tests
@@ -27,8 +59,28 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+
+  accessibility-tests:
+    name: Accessibility Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - name: Install Dependencies
+        run: npm ci
       - name: Run Accessibility Tests
         run: npm run test:a11y
+
+  deploy:
+    name: Deploy to Heroku
+    needs: [lint, unit-tests, e2e-tests, accessibility-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
       - name: Install Heroku CLI
         run: |
           curl https://cli-assets.heroku.com/install.sh | sh

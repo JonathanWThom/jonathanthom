@@ -3,8 +3,9 @@ const lightboxImg = document.querySelector('[data-lightbox-img]');
 const closeBtn = document.querySelector('[data-lightbox-close]');
 const photosContainer = document.querySelector('[data-photos-container]');
 const images = photosContainer.querySelectorAll('img');
-let focusedElementBeforeModal;
-let currentIndex;
+
+let focusedElementBeforeModal = null;
+let currentIndex = 0;
 
 function showImage(index) {
     if (index < 0) {
@@ -34,7 +35,11 @@ function closeLightbox() {
     lightbox.classList.remove('lightbox-open');
     lightboxImg.src = '';
     lightboxImg.alt = '';
-    focusedElementBeforeModal.focus();
+
+    if (focusedElementBeforeModal) {
+        focusedElementBeforeModal.focus();
+    }
+
     document.removeEventListener('keydown', handleKeyDown);
 }
 

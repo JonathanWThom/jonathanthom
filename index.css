@@ -1,5 +1,5 @@
 header {
-    margin-bottom: 4rem;
+    margin-bottom: var(--spacing-lg);
 }
 
 h1 {
@@ -9,5 +9,5 @@ h1 {
 h2 {
     font-size: 1.2rem;
     font-weight: 400;
-    color: #b3b3b3;
+    color: var(--color-text-muted);
 }

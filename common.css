@@ -1,18 +1,31 @@
+:root {
+    --color-background: #1a1a1a;
+    --color-text: #e6e6e6;
+    --color-text-muted: #b3b3b3;
+    --color-accent: #ffc107;
+    --font-family-mono: 'IBM Plex Mono', monospace;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 4rem;
+    --transition-base: all 0.3s ease;
+}
+
 body {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: var(--font-family-mono);
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: #1a1a1a;
-    color: #e6e6e6;
+    background-color: var(--color-background);
+    color: var(--color-text);
 }
 
 .container {
-    padding: 2rem;
+    padding: var(--spacing-md);
 }
 
 h1 {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: var(--font-family-mono);
     margin: 0;
 }
 
@@ -20,19 +33,20 @@ nav {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 1rem;
+    gap: var(--spacing-sm);
 }
 
 nav a {
     text-decoration: none;
-    color: #e6e6e6;
+    color: var(--color-text);
     font-size: 1.5rem;
     position: relative;
-    transition: all 0.3s ease;
+    transition: var(--transition-base);
 }
 
-nav a:hover, nav a:focus {
-    color: #ffc107;
-    outline: 2px solid #ffc107;
+nav a:hover,
+nav a:focus {
+    color: var(--color-accent);
+    outline: 2px solid var(--color-accent);
     outline-offset: 5px;
 }
