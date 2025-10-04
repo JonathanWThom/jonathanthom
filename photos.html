@@ -6,6 +6,7 @@
     <title>Jonathan Thom - Photos</title>
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/common.css">
     <link rel="stylesheet" href="/photos.css">
 </head>
 <body>
@@ -40,7 +41,7 @@
     </div>
     <div id="lightbox" class="lightbox">
         <span class="close">&times;</span>
-        <img class="lightbox-content" id="lightbox-img">
+        <img class="lightbox-content" id="lightbox-img" alt="">
     </div>
     <script>
         const lightbox = document.getElementById('lightbox');
@@ -52,6 +53,7 @@
                 lightbox.style.display = 'block';
                 const filename = image.src.split('/').pop();
                 lightboxImg.src = '/photos/' + filename;
+                lightboxImg.alt = image.alt;
             });
         });
 

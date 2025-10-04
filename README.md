@@ -37,3 +37,30 @@ brew install imagemagick
 ```bash
 sudo apt-get install imagemagick
 ```
+
+## Linting
+
+This project uses Stylelint for CSS and HTMLHint for HTML to maintain code quality and consistency.
+
+### Commands
+
+- **Lint CSS:**
+  ```bash
+  npm run lint:css
+  ```
+- **Lint HTML:**
+  ```bash
+  npm run lint:html
+  ```
+- **Run All Linters:**
+  ```bash
+  npm run lint
+  ```
+- **Fix CSS Issues (where possible):**
+  ```bash
+  npm run lint:fix
+  ```
+
+## Deployment (Heroku)
+
+This website is deployed to Heroku via a continuous integration (CI) step. The `Procfile` in the root directory specifies how to run the application.
