@@ -11,6 +11,6 @@
   "author": "Jonathan Thom",
   "license": "ISC",
   "dependencies": {
-    "serve": "^14.0.1"
+    "serve": "^14.2.5"
   }
 }
