@@ -15,7 +15,7 @@
         <nav>
             <a href="/index.html" class="home-link">Home</a>
         </nav>
-        <div class="photos">
+        <div class="photos" data-photos-container>
             <img src="/photos/optimized/E3725A1B-105B-43D2-B532-6F37F8255801.jpg" tabindex="0"
             alt="Sunset at the corner of Holly and Bay in Bellingham, WA.">
             <img src="/photos/optimized/IMG_0496.jpg" alt="Fishing boats in the
@@ -39,9 +39,9 @@
             ever seen, at Crater Lake, Oregon." tabindex="0">
         </div>
     </div>
-    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true">
-        <span class="close" aria-label="Close">&times;</span>
-        <img class="lightbox-content" id="lightbox-img" alt="">
+    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" data-lightbox>
+        <span class="close" aria-label="Close" data-lightbox-close>&times;</span>
+        <img class="lightbox-content" id="lightbox-img" alt="" data-lightbox-img>
     </div>
     <script src="photos.js"></script>
 </body>
