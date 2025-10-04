@@ -8,13 +8,22 @@ This project uses [pnpm](https://pnpm.io/) as the package manager. To run the we
 
 ```bash
 pnpm install
-pnpm start
+pnpm dev       # Development with auto-reload
+# or
+pnpm start     # Production server
 ```
 
 ### Prerequisites
 
 - Node.js 24.9.0 (managed via `.node-version` and `.tool-versions` files)
-- pnpm 10+ (install with `npm install -g pnpm`)
+- pnpm 10.18.0+ (install with `npm install -g pnpm`)
+
+### Development Mode
+
+The `pnpm dev` command uses Browser Sync for:
+- Auto-reloading when HTML, CSS, or JS files change
+- Synchronized browser testing across devices
+- Built-in server on port 3000
 
 ## Image Optimization
 
