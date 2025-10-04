@@ -13,7 +13,7 @@ pnpm start
 
 ### Prerequisites
 
-- Node.js 24 (managed via `.node-version` file)
+- Node.js 24.9.0 (managed via `.node-version` and `.tool-versions` files)
 - pnpm 10+ (install with `npm install -g pnpm`)
 
 ## Image Optimization
@@ -118,7 +118,7 @@ This website is deployed to Heroku via a continuous integration (CI) step. The `
 ### Heroku Configuration
 
 The project uses:
-- **Node.js 24** (specified in `.node-version` and read by Heroku buildpack)
+- **Node.js 24.9.0** (specified in `.node-version` and read by Heroku buildpack)
 - **pnpm** as package manager (Heroku automatically detects `pnpm-lock.yaml` and uses pnpm)
 
 The CI/CD pipeline runs all tests in parallel (linting, unit tests, E2E tests, and accessibility tests) before deploying to Heroku. All tests must pass for deployment to proceed.
