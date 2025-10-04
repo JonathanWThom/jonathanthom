@@ -4,3 +4,4 @@ images/.DS_Store
 playwright-report/
 test-results/
 .claude/
+pnpm-debug.log

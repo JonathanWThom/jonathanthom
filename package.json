@@ -12,10 +12,11 @@
     "test:e2e:update-snapshots": "playwright test --update-snapshots",
     "lint:css": "stylelint \"**/*.css\"",
     "lint:html": "htmlhint \"**/*.html\"",
-    "lint": "npm run lint:css && npm run lint:html",
+    "lint": "pnpm run lint:css && pnpm run lint:html",
     "lint:fix": "stylelint \"**/*.css\" --fix",
     "test:a11y": "start-server-and-test start http://localhost:3000 \"pa11y http://localhost:3000\""
   },
+  "packageManager": "pnpm@10.18.0",
   "keywords": [],
   "author": "Jonathan Thom",
   "license": "ISC",

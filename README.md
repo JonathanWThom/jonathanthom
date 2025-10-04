@@ -4,12 +4,17 @@ This is the source code for my personal website, jonathanthom.com.
 
 ## Development
 
-To run the website locally, you can use the `npm run start` command. This will start a local web server.
+This project uses [pnpm](https://pnpm.io/) as the package manager. To run the website locally:
 
 ```bash
-npm install
-npm run start
+pnpm install
+pnpm start
 ```
+
+### Prerequisites
+
+- Node.js 24 (managed via `.node-version` file)
+- pnpm 10+ (install with `npm install -g pnpm`)
 
 ## Image Optimization
 
@@ -46,19 +51,19 @@ This project uses Stylelint for CSS and HTMLHint for HTML to maintain code quali
 
 - **Lint CSS:**
   ```bash
-  npm run lint:css
+  pnpm run lint:css
   ```
 - **Lint HTML:**
   ```bash
-  npm run lint:html
+  pnpm run lint:html
   ```
 - **Run All Linters:**
   ```bash
-  npm run lint
+  pnpm run lint
   ```
 - **Fix CSS Issues (where possible):**
   ```bash
-  npm run lint:fix
+  pnpm run lint:fix
   ```
 
 ### Accessibility Testing
@@ -67,7 +72,7 @@ This project uses [Pa11y](https://pa11y.org/) for automated accessibility testin
 
 - **Run Accessibility Tests:**
   ```bash
-  npm run test:a11y
+  pnpm run test:a11y
   ```
 
 ## Testing
@@ -78,7 +83,7 @@ This project uses Jest for unit testing and Playwright for end-to-end testing.
 
 - **Run Unit Tests:**
   ```bash
-  npm test
+  pnpm test
   ```
 
 ### E2E Tests
@@ -91,21 +96,29 @@ End-to-end tests are written with Playwright and include:
 
 - **Run E2E Tests:**
   ```bash
-  npm run test:e2e
+  pnpm run test:e2e
   ```
 - **Run E2E Tests in UI Mode:**
   ```bash
-  npm run test:e2e:ui
+  pnpm run test:e2e:ui
   ```
 - **Run E2E Tests in Headed Mode:**
   ```bash
-  npm run test:e2e:headed
+  pnpm run test:e2e:headed
   ```
 - **Update Visual Snapshots:**
   ```bash
-  npm run test:e2e:update-snapshots
+  pnpm run test:e2e:update-snapshots
   ```
 
 ## Deployment (Heroku)
 
 This website is deployed to Heroku via a continuous integration (CI) step. The `Procfile` in the root directory specifies how to run the application.
+
+### Heroku Configuration
+
+The project uses:
+- **Node.js 24** (specified in `.node-version` and read by Heroku buildpack)
+- **pnpm** as package manager (Heroku automatically detects `pnpm-lock.yaml` and uses pnpm)
+
+The CI/CD pipeline runs all tests in parallel (linting, unit tests, E2E tests, and accessibility tests) before deploying to Heroku. All tests must pass for deployment to proceed.
