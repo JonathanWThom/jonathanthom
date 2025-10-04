@@ -61,6 +61,15 @@ This project uses Stylelint for CSS and HTMLHint for HTML to maintain code quali
   npm run lint:fix
   ```
 
+### Accessibility Testing
+
+This project uses [Pa11y](https://pa11y.org/) for automated accessibility testing.
+
+- **Run Accessibility Tests:**
+  ```bash
+  npm run test:a11y
+  ```
+
 ## Deployment (Heroku)
 
 This website is deployed to Heroku via a continuous integration (CI) step. The `Procfile` in the root directory specifies how to run the application.
