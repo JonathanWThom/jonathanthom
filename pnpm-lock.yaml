@@ -30,6 +30,9 @@ importers:
       pa11y:
         specifier: ^9.0.1
         version: 9.0.1
+      puppeteer:
+        specifier: ^24.23.0
+        version: 24.23.0
       start-server-and-test:
         specifier: ^2.1.2
         version: 2.1.2
