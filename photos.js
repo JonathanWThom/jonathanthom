@@ -2,7 +2,7 @@ const lightbox = document.querySelector('[data-lightbox]');
 const lightboxImg = document.querySelector('[data-lightbox-img]');
 const closeBtn = document.querySelector('[data-lightbox-close]');
 const photosContainer = document.querySelector('[data-photos-container]');
-const images = photosContainer.querySelectorAll('img'); // Select images within the container
+const images = photosContainer.querySelectorAll('img');
 let focusedElementBeforeModal;
 let currentIndex;
 
@@ -22,7 +22,7 @@ function showImage(index) {
 
 function openLightbox(image) {
     focusedElementBeforeModal = document.activeElement;
-    lightbox.classList.add('lightbox--open');
+    lightbox.classList.add('lightbox-open');
     currentIndex = Array.from(images).indexOf(image);
     showImage(currentIndex);
     closeBtn.focus();
@@ -31,7 +31,7 @@ function openLightbox(image) {
 }
 
 function closeLightbox() {
-    lightbox.classList.remove('lightbox--open');
+    lightbox.classList.remove('lightbox-open');
     focusedElementBeforeModal.focus();
     document.removeEventListener('keydown', handleKeyDown);
 }
@@ -48,7 +48,7 @@ function handleKeyDown(e) {
         const firstFocusableElement = focusableElements[0];
         const lastFocusableElement = focusableElements[focusableElements.length - 1];
 
-        if (e.shiftKey) { // Shift + Tab
+        if (e.shiftKey) {
             if (document.activeElement === firstFocusableElement) {
                 lastFocusableElement.focus();
                 e.preventDefault();
@@ -62,7 +62,6 @@ function handleKeyDown(e) {
     }
 }
 
-// Event delegation for thumbnail clicks and keydowns
 photosContainer.addEventListener('click', (e) => {
     if (e.target.tagName === 'IMG' && e.target.closest('[data-photos-container]')) {
         openLightbox(e.target);

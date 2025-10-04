@@ -40,7 +40,7 @@ function showImage(index) {
 
 function openLightbox(image) {
     focusedElementBeforeModal = document.activeElement;
-    lightbox.classList.add('lightbox--open');
+    lightbox.classList.add('lightbox-open');
     currentIndex = Array.from(images).indexOf(image);
     showImage(currentIndex);
     closeBtn.focus();
@@ -49,7 +49,7 @@ function openLightbox(image) {
 }
 
 function closeLightbox() {
-    lightbox.classList.remove('lightbox--open');
+    lightbox.classList.remove('lightbox-open');
     if (focusedElementBeforeModal) {
         focusedElementBeforeModal.focus();
     }
@@ -178,7 +178,7 @@ describe('Lightbox functionality', () => {
 
         openLightbox(firstImage);
 
-        expect(lightbox.classList.contains('lightbox--open')).toBe(true);
+        expect(lightbox.classList.contains('lightbox-open')).toBe(true);
         expect(lightboxImg.src).toContain('/photos/img1.jpg');
         expect(lightboxImg.alt).toBe('Image 1');
         expect(closeBtnFocusSpy).toHaveBeenCalled();
@@ -193,7 +193,7 @@ describe('Lightbox functionality', () => {
 
         closeLightbox();
 
-        expect(lightbox.classList.contains('lightbox--open')).toBe(false);
+        expect(lightbox.classList.contains('lightbox-open')).toBe(false);
         expect(firstImageFocusSpy).toHaveBeenCalled();
         firstImageFocusSpy.mockRestore();
     });
@@ -206,7 +206,7 @@ describe('Lightbox functionality', () => {
         const escapeEvent = new KeyboardEvent('keydown', { key: 'Escape' });
         document.dispatchEvent(escapeEvent);
 
-        expect(lightbox.classList.contains('lightbox--open')).toBe(false);
+        expect(lightbox.classList.contains('lightbox-open')).toBe(false);
     });
 
     test('ArrowRight key shows next image', () => {
@@ -239,7 +239,7 @@ describe('Lightbox functionality', () => {
 
         closeBtn.click();
 
-        expect(lightbox.classList.contains('lightbox--open')).toBe(false);
+        expect(lightbox.classList.contains('lightbox-open')).toBe(false);
     });
 
     test('Clicking outside lightbox content closes lightbox', () => {
@@ -248,7 +248,7 @@ describe('Lightbox functionality', () => {
 
         lightbox.click(); // Simulate click on the lightbox overlay itself
 
-        expect(lightbox.classList.contains('lightbox--open')).toBe(false);
+        expect(lightbox.classList.contains('lightbox-open')).toBe(false);
     });
 
     test('Clicking on image inside lightbox does not close lightbox', () => {
@@ -257,14 +257,14 @@ describe('Lightbox functionality', () => {
 
         lightboxImg.click(); // Simulate click on the image inside lightbox
 
-        expect(lightbox.classList.contains('lightbox--open')).toBe(true);
+        expect(lightbox.classList.contains('lightbox-open')).toBe(true);
     });
 
     test('Clicking on thumbnail opens lightbox', () => {
         const firstImage = images[0];
         firstImage.click();
 
-        expect(lightbox.classList.contains('lightbox--open')).toBe(true);
+        expect(lightbox.classList.contains('lightbox-open')).toBe(true);
         expect(lightboxImg.src).toContain('/photos/img1.jpg');
     });
 
@@ -274,7 +274,7 @@ describe('Lightbox functionality', () => {
         const enterEvent = new KeyboardEvent('keydown', { key: 'Enter' });
         firstImage.dispatchEvent(enterEvent);
 
-        expect(lightbox.classList.contains('lightbox--open')).toBe(true);
+        expect(lightbox.classList.contains('lightbox-open')).toBe(true);
         expect(lightboxImg.src).toContain('/photos/img1.jpg');
     });
 
@@ -284,7 +284,7 @@ describe('Lightbox functionality', () => {
         const spaceEvent = new KeyboardEvent('keydown', { key: ' ' });
         firstImage.dispatchEvent(spaceEvent);
 
-        expect(lightbox.classList.contains('lightbox--open')).toBe(true);
+        expect(lightbox.classList.contains('lightbox-open')).toBe(true);
         expect(lightboxImg.src).toContain('/photos/img1.jpg');
     });
 

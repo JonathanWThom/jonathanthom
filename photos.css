@@ -47,7 +47,7 @@ nav a {
     background-color: rgb(0 0 0 / 90%);
 }
 
-.lightbox--open {
+.lightbox-open {
     display: block;
 }
 

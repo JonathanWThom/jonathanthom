@@ -70,6 +70,42 @@ This project uses [Pa11y](https://pa11y.org/) for automated accessibility testin
   npm run test:a11y
   ```
 
+## Testing
+
+This project uses Jest for unit testing and Playwright for end-to-end testing.
+
+### Unit Tests
+
+- **Run Unit Tests:**
+  ```bash
+  npm test
+  ```
+
+### E2E Tests
+
+End-to-end tests are written with Playwright and include:
+- Functional testing of all pages
+- Lightbox interaction testing
+- Visual regression testing with snapshots
+- Responsive design testing across multiple viewports
+
+- **Run E2E Tests:**
+  ```bash
+  npm run test:e2e
+  ```
+- **Run E2E Tests in UI Mode:**
+  ```bash
+  npm run test:e2e:ui
+  ```
+- **Run E2E Tests in Headed Mode:**
+  ```bash
+  npm run test:e2e:headed
+  ```
+- **Update Visual Snapshots:**
+  ```bash
+  npm run test:e2e:update-snapshots
+  ```
+
 ## Deployment (Heroku)
 
 This website is deployed to Heroku via a continuous integration (CI) step. The `Procfile` in the root directory specifies how to run the application.
