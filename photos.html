@@ -140,7 +140,7 @@
         document.querySelectorAll('.photos img').forEach(image => {
             image.addEventListener('click', () => {
                 lightbox.style.display = 'block';
-                lightboxImg.src = '/photos/' + new URL(image.src).pathname.replace(/^\/|\/optimized\//g, '');
+                lightboxImg.src = '/photos/' + image.src.split('/').pop();
             });
         });
 
