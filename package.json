@@ -16,7 +16,7 @@
     "lint:html": "htmlhint \"**/*.html\" --ignore \"playwright-report/**,test-results/**\"",
     "lint": "pnpm run lint:css && pnpm run lint:html",
     "lint:fix": "stylelint \"**/*.css\" --fix",
-    "test:a11y": "start-server-and-test 'pnpm start' http://localhost:3000 'pa11y-ci'",
+    "test:a11y": "start-server-and-test 'pnpm start' http://localhost:3000 'pa11y-ci --sitemap http://localhost:3000/sitemap.xml --sitemap-find https://jonathanthom.com --sitemap-replace http://localhost:3000'",
     "ci": "pnpm run lint && pnpm test && pnpm run test:e2e && pnpm run test:a11y"
   },
   "packageManager": "pnpm@10.18.0",
