@@ -140,7 +140,8 @@
         document.querySelectorAll('.photos img').forEach(image => {
             image.addEventListener('click', () => {
                 lightbox.style.display = 'block';
-                lightboxImg.src = '/photos/' + image.src.split('/').pop();
+                const filename = image.src.split('/').pop();
+                lightboxImg.src = '/photos/' + filename;
             });
         });
 
