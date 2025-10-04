@@ -88,7 +88,7 @@ This project uses Stylelint for CSS and HTMLHint for HTML to maintain code quali
 
 ### Accessibility Testing
 
-This project uses [Pa11y](https://pa11y.org/) for automated accessibility testing.
+This project uses [Pa11y CI](https://github.com/pa11y/pa11y-ci) for automated accessibility testing. Tests run against all URLs defined in `sitemap.xml`.
 
 - **Run Accessibility Tests:**
   ```bash
@@ -111,7 +111,7 @@ This command runs sequentially:
 1. Linting (CSS + HTML)
 2. Unit tests (Jest)
 3. E2E tests (Playwright)
-4. Accessibility tests (Pa11y)
+4. Accessibility tests (Pa11y CI)
 
 ### Unit Tests
 
