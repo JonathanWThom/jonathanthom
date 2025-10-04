@@ -38,9 +38,10 @@
   - Add to both index.html and photos.html
 
 ### Code Quality
-- [ ] Fix npm warnings from serve command
-  - Ensure all tools use pnpm consistently
-  - May need to configure serve differently or use alternative
+- [x] Fix npm warnings from serve command
+  - Renamed .npmrc to .pnpmrc (pnpm-specific config)
+  - Updated test:a11y script to use 'pnpm start' explicitly
+  - All tools now use pnpm consistently
 - [ ] Document magic numbers in CSS
   - z-index: 1000 rationale
   - opacity: 0.9 reasoning
@@ -86,7 +87,8 @@
 - Add onerror handler with fallback
 
 ### Configuration
-- .npmrc contains pnpm config but npm still used by some tools
+- [x] .npmrc contains pnpm config but npm still used by some tools
+  - Fixed by renaming to .pnpmrc
 - playwright.config.js has unexplained hardcoded timeouts
 - package.json ci script doesn't perfectly match GitHub Actions workflow
 
@@ -96,3 +98,5 @@
 - [x] Add playwright-report to gitignore
 - [x] Verify all CI tests pass
 - [x] Comprehensive code review
+- [x] Fix npm warnings from serve command (renamed .npmrc to .pnpmrc)
+- [x] Install Chromium for Pa11y in CI accessibility tests
