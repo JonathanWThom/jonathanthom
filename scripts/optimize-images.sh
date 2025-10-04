@@ -17,28 +17,27 @@ then
     exit
 fi
 
-# Check for input directory
-if [ -z "$1" ]
-  then
-    echo "No input directory supplied. Usage: ./optimize-images.sh <directory>"
+INPUT_DIR=${1:-photos} # Default to photos/ if not specified
+QUALITY=${2:-85} # Default to 85 if not specified
+
+if [ ! -d "$INPUT_DIR" ]; then
+    echo "Input directory '$INPUT_DIR' not found."
     exit
 fi
 
-INPUT_DIR=$1
 OUTPUT_DIR="${INPUT_DIR}/optimized"
 
 mkdir -p "$OUTPUT_DIR"
 
-for image in "$INPUT_DIR"/*.{jpg,jpeg,png}
+for image in "$INPUT_DIR"/*.{jpg,jpeg,png,heic,HEIC,JPG,JPEG,PNG}
 do
     if [ -f "$image" ]; then
         filename=$(basename -- "$image")
-        extension="${filename##*.}"
-        filename="${filename%.*}"
+        filename_no_ext="${filename%.*}"
 
         echo "Optimizing $image..."
 
-        magick "$image" -resize 1200x -quality 85 "$OUTPUT_DIR/$filename.jpg"
+        magick "$image" -resize 1200x -quality "$QUALITY" "$OUTPUT_DIR/$filename_no_ext.jpg"
     fi
 done
 
