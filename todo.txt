@@ -1,0 +1,98 @@
+# Code Review TODO List
+
+## High Priority
+
+### Accessibility Fixes
+- [ ] Fix alt text line breaks in photos.html (lines 23-42)
+  - Remove awkward mid-sentence line breaks
+  - Example: line 23-24 should be single line
+- [ ] Add prefers-reduced-motion support in CSS
+  - Add @media (prefers-reduced-motion: reduce) block
+  - Set animation/transition durations to 0.01ms
+- [ ] Replace :focus with :focus-visible throughout CSS files
+  - Update common.css
+  - Update photos.css
+  - Better keyboard navigation UX
+- [ ] Add aria-live announcements for lightbox image changes
+  - Announce which image is being viewed (e.g., "Image 1 of 9")
+  - Update photos.js
+
+### Error Handling
+- [ ] Add image loading error handling in photos.js
+  - Add lightboxImg.onerror handler
+  - Provide fallback image or message
+  - Prevent broken lightbox experience
+
+## Medium Priority
+
+### Security
+- [ ] Add Content Security Policy meta tags
+  - Add to index.html
+  - Add to photos.html
+  - Example CSP: default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:;
+
+### Performance
+- [ ] Add preconnect for Google Fonts in HTML head
+  - <link rel="preconnect" href="https://fonts.googleapis.com">
+  - <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  - Add to both index.html and photos.html
+
+### Code Quality
+- [ ] Fix npm warnings from serve command
+  - Ensure all tools use pnpm consistently
+  - May need to configure serve differently or use alternative
+- [ ] Document magic numbers in CSS
+  - z-index: 1000 rationale
+  - opacity: 0.9 reasoning
+- [ ] Add comments to playwright.config.js timeout values
+  - Explain why 120000ms timeout is needed
+
+## Low Priority
+
+### Features
+- [ ] Add image preloading for next/previous images
+  - Improve perceived performance in lightbox
+  - Preload adjacent images when lightbox opens
+- [ ] Add web manifest.json
+  - Enable PWA capabilities
+  - Add to HTML files
+  - Define icons and theme colors
+
+### Testing
+- [ ] Replace heavy DOM mocking in __tests__/photos.test.js
+  - Consider integration tests instead
+  - Reduce brittleness of current approach
+- [ ] Add network failure tests
+  - Test image loading failures
+  - Test graceful degradation
+- [ ] Add tests for image preloading (once implemented)
+
+### Architecture
+- [ ] Consider asset optimization pipeline
+  - Image compression step in CI
+  - Generate WebP/AVIF formats
+  - Add responsive image srcset
+  - May be overkill for personal site
+
+## Code Issues Noted
+
+### photos.js:61-62
+- handleKeyDown defined inside openLightbox() but referenced in closeLightbox()
+- Works but fragile pattern
+- Consider making it a module-level function
+
+### photos.js:27-31
+- No error handling if image fails to load
+- Add onerror handler with fallback
+
+### Configuration
+- .npmrc contains pnpm config but npm still used by some tools
+- playwright.config.js has unexplained hardcoded timeouts
+- package.json ci script doesn't perfectly match GitHub Actions workflow
+
+## Completed
+- [x] Fix pnpm lockfile checksum issue
+- [x] Update visual snapshots for lightbox
+- [x] Add playwright-report to gitignore
+- [x] Verify all CI tests pass
+- [x] Comprehensive code review
