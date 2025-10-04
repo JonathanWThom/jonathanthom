@@ -32,6 +32,8 @@ function openLightbox(image) {
 
 function closeLightbox() {
     lightbox.classList.remove('lightbox-open');
+    lightboxImg.src = '';
+    lightboxImg.alt = '';
     focusedElementBeforeModal.focus();
     document.removeEventListener('keydown', handleKeyDown);
 }

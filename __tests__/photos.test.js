@@ -50,6 +50,8 @@ function openLightbox(image) {
 
 function closeLightbox() {
     lightbox.classList.remove('lightbox-open');
+    lightboxImg.src = '';
+    lightboxImg.alt = '';
     if (focusedElementBeforeModal) {
         focusedElementBeforeModal.focus();
     }

@@ -10,5 +10,6 @@
   "alt-require": true,
   "space-tab-mixed-disabled": true,
   "attr-no-duplication": true,
-  "title-require": true
+  "title-require": true,
+  "htmlhint-ignore": ["playwright-report/**"]
 }
