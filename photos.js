@@ -8,6 +8,20 @@ const announcement = document.querySelector('[data-lightbox-announcement]');
 let focusedElementBeforeModal = null;
 let currentIndex = 0;
 
+function preloadAdjacentImages(index) {
+    // Preload next image
+    const nextIndex = (index + 1) % images.length;
+    const nextImage = new Image();
+    const nextFilename = images[nextIndex].src.split('/').pop();
+    nextImage.src = '/photos/' + nextFilename;
+
+    // Preload previous image
+    const prevIndex = index - 1 < 0 ? images.length - 1 : index - 1;
+    const prevImage = new Image();
+    const prevFilename = images[prevIndex].src.split('/').pop();
+    prevImage.src = '/photos/' + prevFilename;
+}
+
 function showImage(index) {
     if (index < 0) {
         currentIndex = images.length - 1;
@@ -33,6 +47,9 @@ function showImage(index) {
     if (announcement) {
         announcement.textContent = `Image ${currentIndex + 1} of ${images.length}: ${image.alt}`;
     }
+
+    // Preload adjacent images for better performance
+    preloadAdjacentImages(currentIndex);
 }
 
 function openLightbox(image) {

@@ -1,41 +1,10 @@
 # Code Review TODO List
 
-## Medium Priority
-
-### Security
-- [x] Add Content Security Policy meta tags
-  - Add to index.html
-  - Add to photos.html
-  - Example CSP: default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:;
-
-### Performance
-- [x] Add preconnect for Google Fonts in HTML head
-  - <link rel="preconnect" href="https://fonts.googleapis.com">
-  - <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  - Add to both index.html and photos.html
-
-### Code Quality
-- [x] Fix npm warnings from serve command
-  - Renamed .npmrc to .pnpmrc (pnpm-specific config)
-  - Updated test:a11y script to use 'pnpm start' explicitly
-  - All tools now use pnpm consistently
-- [x] Document magic numbers in CSS
-  - z-index: 1000 rationale
-  - opacity: 0.9 reasoning
-- [x] Add comments to playwright.config.js timeout values
-  - Explain why 120000ms timeout is needed
-
-## Low Priority
-
 ### Features
-- [ ] Add image preloading for next/previous images
+- [x] Add image preloading for next/previous images
   - Improve perceived performance in lightbox
   - Preload adjacent images when lightbox opens
-- [ ] Add web manifest.json
-  - Enable PWA capabilities
-  - Add to HTML files
-  - Define icons and theme colors
-- [ ] add caption from alt text to visible preview on hover over image
+- [x] add caption from alt text to visible preview on hover over image
   - Use title attribute or custom tooltip
   - Improve accessibility and UX
 
