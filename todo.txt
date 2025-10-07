@@ -1,14 +1,5 @@
 # Code Review TODO List
 
-## High Priority
-
-
-### Error Handling
-- [ ] Add image loading error handling in photos.js
-  - Add lightboxImg.onerror handler
-  - Provide fallback image or message
-  - Prevent broken lightbox experience
-
 ## Medium Priority
 
 ### Security
@@ -44,6 +35,9 @@
   - Enable PWA capabilities
   - Add to HTML files
   - Define icons and theme colors
+- [ ] add caption from alt text to visible preview on hover over image
+  - Use title attribute or custom tooltip
+  - Improve accessibility and UX
 
 ### Testing
 - [ ] Replace heavy DOM mocking in __tests__/photos.test.js
@@ -69,8 +63,8 @@
 - Consider making it a module-level function
 
 ### photos.js:27-31
-- No error handling if image fails to load
-- Add onerror handler with fallback
+- [x] No error handling if image fails to load
+- [x] Add onerror handler with fallback
 
 ### Configuration
 - [x] .npmrc contains pnpm config but npm still used by some tools

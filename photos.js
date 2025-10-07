@@ -21,6 +21,14 @@ function showImage(index) {
     lightboxImg.src = '/photos/' + filename;
     lightboxImg.alt = image.alt;
 
+    // Handle image loading errors
+    lightboxImg.onerror = function() {
+        lightboxImg.alt = 'Image failed to load. Please try again.';
+        if (announcement) {
+            announcement.textContent = 'Error loading image. Please try closing and reopening the lightbox.';
+        }
+    };
+
     // Announce image change to screen readers
     if (announcement) {
         announcement.textContent = `Image ${currentIndex + 1} of ${images.length}: ${image.alt}`;
