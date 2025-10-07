@@ -71,7 +71,12 @@ nav a {
 }
 
 .close:hover,
-.close:focus {
+.close:focus-visible {
     color: var(--color-text-muted);
     text-decoration: none;
+}
+
+.photos img:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
 }

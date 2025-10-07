@@ -2,20 +2,6 @@
 
 ## High Priority
 
-### Accessibility Fixes
-- [ ] Fix alt text line breaks in photos.html (lines 23-42)
-  - Remove awkward mid-sentence line breaks
-  - Example: line 23-24 should be single line
-- [ ] Add prefers-reduced-motion support in CSS
-  - Add @media (prefers-reduced-motion: reduce) block
-  - Set animation/transition durations to 0.01ms
-- [ ] Replace :focus with :focus-visible throughout CSS files
-  - Update common.css
-  - Update photos.css
-  - Better keyboard navigation UX
-- [ ] Add aria-live announcements for lightbox image changes
-  - Announce which image is being viewed (e.g., "Image 1 of 9")
-  - Update photos.js
 
 ### Error Handling
 - [ ] Add image loading error handling in photos.js

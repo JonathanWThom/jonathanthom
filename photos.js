@@ -3,6 +3,7 @@ const lightboxImg = document.querySelector('[data-lightbox-img]');
 const closeBtn = document.querySelector('[data-lightbox-close]');
 const photosContainer = document.querySelector('[data-photos-container]');
 const images = photosContainer.querySelectorAll('img');
+const announcement = document.querySelector('[data-lightbox-announcement]');
 
 let focusedElementBeforeModal = null;
 let currentIndex = 0;
@@ -19,6 +20,11 @@ function showImage(index) {
     const filename = image.src.split('/').pop();
     lightboxImg.src = '/photos/' + filename;
     lightboxImg.alt = image.alt;
+
+    // Announce image change to screen readers
+    if (announcement) {
+        announcement.textContent = `Image ${currentIndex + 1} of ${images.length}: ${image.alt}`;
+    }
 }
 
 function openLightbox(image) {
@@ -84,6 +90,13 @@ photosContainer.addEventListener('keydown', (e) => {
 
 closeBtn.addEventListener('click', () => {
     closeLightbox();
+});
+
+closeBtn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        closeLightbox();
+    }
 });
 
 lightbox.addEventListener('click', (e) => {

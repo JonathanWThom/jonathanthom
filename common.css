@@ -45,8 +45,31 @@ nav a {
 }
 
 nav a:hover,
-nav a:focus {
+nav a:focus-visible {
     color: var(--color-accent);
     outline: 2px solid var(--color-accent);
     outline-offset: 5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border-width: 0;
 }
