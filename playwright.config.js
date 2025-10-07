@@ -23,6 +23,7 @@ module.exports = defineConfig({
     command: 'pnpm start',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
+    // 2 minute timeout allows sufficient time for server startup, dependency installation, and port binding
     timeout: 120000,
   },
 });

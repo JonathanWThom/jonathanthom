@@ -32,12 +32,16 @@ nav a {
 
 .photos img:hover {
     cursor: pointer;
+
+    /* Subtle visual feedback on hover - 80% opacity provides clear indication without being jarring */
     opacity: 0.8;
 }
 
 .lightbox {
     display: none;
     position: fixed;
+
+    /* High z-index ensures lightbox appears above all other page content */
     z-index: 1000;
     padding-top: 100px;
     left: 0;

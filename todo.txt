@@ -3,13 +3,13 @@
 ## Medium Priority
 
 ### Security
-- [ ] Add Content Security Policy meta tags
+- [x] Add Content Security Policy meta tags
   - Add to index.html
   - Add to photos.html
   - Example CSP: default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:;
 
 ### Performance
-- [ ] Add preconnect for Google Fonts in HTML head
+- [x] Add preconnect for Google Fonts in HTML head
   - <link rel="preconnect" href="https://fonts.googleapis.com">
   - <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   - Add to both index.html and photos.html
@@ -19,10 +19,10 @@
   - Renamed .npmrc to .pnpmrc (pnpm-specific config)
   - Updated test:a11y script to use 'pnpm start' explicitly
   - All tools now use pnpm consistently
-- [ ] Document magic numbers in CSS
+- [x] Document magic numbers in CSS
   - z-index: 1000 rationale
   - opacity: 0.9 reasoning
-- [ ] Add comments to playwright.config.js timeout values
+- [x] Add comments to playwright.config.js timeout values
   - Explain why 120000ms timeout is needed
 
 ## Low Priority
