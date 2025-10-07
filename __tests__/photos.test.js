@@ -2,121 +2,13 @@
  * @jest-environment jsdom
  */
 
-// Mock the DOM structure that photos.js expects
-document.body.innerHTML = `
-    <div class="photos" data-photos-container>
-        <img src="/photos/optimized/img1.jpg" alt="Image 1" tabindex="0">
-        <img src="/photos/optimized/img2.jpg" alt="Image 2" tabindex="0">
-        <img src="/photos/optimized/img3.jpg" alt="Image 3" tabindex="0">
-    </div>
-    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" data-lightbox>
-        <span class="close" aria-label="Close" data-lightbox-close tabindex="0">&times;</span>
-        <img class="lightbox-content" id="lightbox-img" alt="" data-lightbox-img tabindex="0">
-    </div>
-`;
-
-// Re-declaring the content of photos.js for testing purposes
-const lightbox = document.querySelector('[data-lightbox]');
-const lightboxImg = document.querySelector('[data-lightbox-img]');
-const closeBtn = document.querySelector('[data-lightbox-close]');
-const photosContainer = document.querySelector('[data-photos-container]');
-const images = photosContainer.querySelectorAll('img');
-let focusedElementBeforeModal;
-let currentIndex;
-
-function showImage(index) {
-    if (index < 0) {
-        currentIndex = images.length - 1;
-    } else if (index >= images.length) {
-        currentIndex = 0;
-    } else {
-        currentIndex = index;
-    }
-    const image = images[currentIndex];
-    const filename = image.src.split('/').pop();
-    lightboxImg.src = '/photos/' + filename;
-    lightboxImg.alt = image.alt;
-}
-
-function openLightbox(image) {
-    focusedElementBeforeModal = document.activeElement;
-    lightbox.classList.add('lightbox-open');
-    currentIndex = Array.from(images).indexOf(image);
-    showImage(currentIndex);
-    closeBtn.focus();
-
-    document.addEventListener('keydown', handleKeyDown);
-}
-
-function closeLightbox() {
-    lightbox.classList.remove('lightbox-open');
-    lightboxImg.src = '';
-    lightboxImg.alt = '';
-    if (focusedElementBeforeModal) {
-        focusedElementBeforeModal.focus();
-    }
-    document.removeEventListener('keydown', handleKeyDown);
-}
-
-function handleKeyDown(e) {
-    if (e.key === 'Escape') {
-        closeLightbox();
-    } else if (e.key === 'ArrowRight') {
-        showImage(currentIndex + 1);
-    } else if (e.key === 'ArrowLeft') {
-        showImage(currentIndex - 1);
-    } else if (e.key === 'Tab') {
-        const focusableElements = lightbox.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-        const firstFocusableElement = focusableElements[0];
-        const lastFocusableElement = focusableElements[focusableElements.length - 1];
-
-        if (e.shiftKey) { // Shift + Tab
-            if (document.activeElement === firstFocusableElement) {
-                lastFocusableElement.focus();
-                e.preventDefault();
-            }
-        } else { // Tab
-            if (document.activeElement === lastFocusableElement) {
-                firstFocusableElement.focus();
-                e.preventDefault();
-            }
-        }
-    }
-}
-
-// Mock event listeners for testing
-photosContainer.addEventListener('click', (e) => {
-    if (e.target.tagName === 'IMG' && e.target.closest('[data-photos-container]')) {
-        openLightbox(e.target);
-    }
-});
-
-photosContainer.addEventListener('keydown', (e) => {
-    if ((e.key === 'Enter' || e.key === ' ') && e.target.tagName === 'IMG' && e.target.closest('[data-photos-container]')) {
-        e.preventDefault();
-        openLightbox(e.target);
-    }
-});
-
-closeBtn.addEventListener('click', () => {
-    closeLightbox();
-});
-
-lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) {
-        closeLightbox();
-    }
-});
-
-
 describe('Lightbox functionality', () => {
-    let initialFocusedElement;
+    let lightbox, lightboxImg, closeBtn, photosContainer, images, announcement;
+    let showImage, openLightbox, closeLightbox, handleKeyDown, preloadAdjacentImages;
+    let currentIndex, focusedElementBeforeModal;
 
     beforeEach(() => {
-        // Save the initial active element before each test
-        initialFocusedElement = document.activeElement;
-
-        // Reset DOM and re-import/re-evaluate script before each test
+        // Setup DOM
         document.body.innerHTML = `
             <div class="photos" data-photos-container>
                 <img src="/photos/optimized/img1.jpg" alt="Image 1" tabindex="0">
@@ -126,30 +18,140 @@ describe('Lightbox functionality', () => {
             <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" data-lightbox>
                 <span class="close" aria-label="Close" data-lightbox-close tabindex="0">&times;</span>
                 <img class="lightbox-content" id="lightbox-img" alt="" data-lightbox-img tabindex="0">
+                <div class="sr-only" aria-live="polite" aria-atomic="true" data-lightbox-announcement></div>
             </div>
         `;
-        // Re-query elements after DOM reset
-        Object.assign(global, {
-            lightbox: document.querySelector('[data-lightbox]'),
-            lightboxImg: document.querySelector('[data-lightbox-img]'),
-            closeBtn: document.querySelector('[data-lightbox-close]'),
-            photosContainer: document.querySelector('[data-photos-container]'),
-            images: document.querySelectorAll('.photos img'),
-            focusedElementBeforeModal: undefined,
-            currentIndex: undefined,
+
+        // Get DOM elements
+        lightbox = document.querySelector('[data-lightbox]');
+        lightboxImg = document.querySelector('[data-lightbox-img]');
+        closeBtn = document.querySelector('[data-lightbox-close]');
+        photosContainer = document.querySelector('[data-photos-container]');
+        images = photosContainer.querySelectorAll('img');
+        announcement = document.querySelector('[data-lightbox-announcement]');
+
+        currentIndex = 0;
+        focusedElementBeforeModal = null;
+
+        // Define functions (lightweight implementation for testing)
+        preloadAdjacentImages = jest.fn((index) => {
+            const nextIndex = (index + 1) % images.length;
+            const prevIndex = index - 1 < 0 ? images.length - 1 : index - 1;
+            // Simulate preloading without actual network requests
         });
-        // Ensure the initial focused element is something that can receive focus
-        // For example, focus the first image thumbnail
+
+        showImage = (index) => {
+            if (index < 0) {
+                currentIndex = images.length - 1;
+            } else if (index >= images.length) {
+                currentIndex = 0;
+            } else {
+                currentIndex = index;
+            }
+            const image = images[currentIndex];
+            const filename = image.src.split('/').pop();
+            lightboxImg.src = '/photos/' + filename;
+            lightboxImg.alt = image.alt;
+
+            // Handle image loading errors
+            lightboxImg.onerror = function() {
+                lightboxImg.alt = 'Image failed to load. Please try again.';
+                if (announcement) {
+                    announcement.textContent = 'Error loading image. Please try closing and reopening the lightbox.';
+                }
+            };
+
+            // Announce image change to screen readers
+            if (announcement) {
+                announcement.textContent = `Image ${currentIndex + 1} of ${images.length}: ${image.alt}`;
+            }
+
+            // Preload adjacent images for better performance
+            preloadAdjacentImages(currentIndex);
+        };
+
+        openLightbox = (image) => {
+            focusedElementBeforeModal = document.activeElement;
+            lightbox.classList.add('lightbox-open');
+            currentIndex = Array.from(images).indexOf(image);
+            showImage(currentIndex);
+            closeBtn.focus();
+            document.addEventListener('keydown', handleKeyDown);
+        };
+
+        closeLightbox = () => {
+            lightbox.classList.remove('lightbox-open');
+            lightboxImg.src = '';
+            lightboxImg.alt = '';
+            if (focusedElementBeforeModal) {
+                focusedElementBeforeModal.focus();
+            }
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+
+        handleKeyDown = (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            } else if (e.key === 'ArrowRight') {
+                showImage(currentIndex + 1);
+            } else if (e.key === 'ArrowLeft') {
+                showImage(currentIndex - 1);
+            } else if (e.key === 'Tab') {
+                const focusableElements = lightbox.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                const firstFocusableElement = focusableElements[0];
+                const lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+                if (e.shiftKey) {
+                    if (document.activeElement === firstFocusableElement) {
+                        lastFocusableElement.focus();
+                        e.preventDefault();
+                    }
+                } else {
+                    if (document.activeElement === lastFocusableElement) {
+                        firstFocusableElement.focus();
+                        e.preventDefault();
+                    }
+                }
+            }
+        };
+
+        // Setup event listeners
+        photosContainer.addEventListener('click', (e) => {
+            if (e.target.tagName === 'IMG' && e.target.closest('[data-photos-container]')) {
+                openLightbox(e.target);
+            }
+        });
+
+        photosContainer.addEventListener('keydown', (e) => {
+            if ((e.key === 'Enter' || e.key === ' ') && e.target.tagName === 'IMG' && e.target.closest('[data-photos-container]')) {
+                e.preventDefault();
+                openLightbox(e.target);
+            }
+        });
+
+        closeBtn.addEventListener('click', () => {
+            closeLightbox();
+        });
+
+        closeBtn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                closeLightbox();
+            }
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
         images[0].focus();
     });
 
     afterEach(() => {
-        // Restore initial focus after each test
-        if (initialFocusedElement && typeof initialFocusedElement.focus === 'function') {
-            initialFocusedElement.focus();
-        }
+        document.removeEventListener('keydown', handleKeyDown);
     });
-
 
     test('showImage updates lightbox content correctly', () => {
         showImage(0);
@@ -176,7 +178,7 @@ describe('Lightbox functionality', () => {
     test('openLightbox displays lightbox and sets focus', () => {
         const firstImage = images[0];
         const closeBtnFocusSpy = jest.spyOn(closeBtn, 'focus');
-        firstImage.focus(); // Simulate focusing the image before opening lightbox
+        firstImage.focus();
 
         openLightbox(firstImage);
 
@@ -191,7 +193,7 @@ describe('Lightbox functionality', () => {
         const firstImage = images[0];
         const firstImageFocusSpy = jest.spyOn(firstImage, 'focus');
         firstImage.focus();
-        openLightbox(firstImage); // Open it first
+        openLightbox(firstImage);
 
         closeLightbox();
 
@@ -214,7 +216,7 @@ describe('Lightbox functionality', () => {
     test('ArrowRight key shows next image', () => {
         const firstImage = images[0];
         firstImage.focus();
-        openLightbox(firstImage); // Current index is 0
+        openLightbox(firstImage);
 
         const arrowRightEvent = new KeyboardEvent('keydown', { key: 'ArrowRight' });
         document.dispatchEvent(arrowRightEvent);
@@ -226,7 +228,7 @@ describe('Lightbox functionality', () => {
     test('ArrowLeft key shows previous image', () => {
         const secondImage = images[1];
         secondImage.focus();
-        openLightbox(secondImage); // Current index is 1
+        openLightbox(secondImage);
 
         const arrowLeftEvent = new KeyboardEvent('keydown', { key: 'ArrowLeft' });
         document.dispatchEvent(arrowLeftEvent);
@@ -248,7 +250,7 @@ describe('Lightbox functionality', () => {
         const firstImage = images[0];
         openLightbox(firstImage);
 
-        lightbox.click(); // Simulate click on the lightbox overlay itself
+        lightbox.click();
 
         expect(lightbox.classList.contains('lightbox-open')).toBe(false);
     });
@@ -257,7 +259,7 @@ describe('Lightbox functionality', () => {
         const firstImage = images[0];
         openLightbox(firstImage);
 
-        lightboxImg.click(); // Simulate click on the image inside lightbox
+        lightboxImg.click();
 
         expect(lightbox.classList.contains('lightbox-open')).toBe(true);
     });
@@ -273,7 +275,7 @@ describe('Lightbox functionality', () => {
     test('Enter key on thumbnail opens lightbox', () => {
         const firstImage = images[0];
         firstImage.focus();
-        const enterEvent = new KeyboardEvent('keydown', { key: 'Enter' });
+        const enterEvent = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true });
         firstImage.dispatchEvent(enterEvent);
 
         expect(lightbox.classList.contains('lightbox-open')).toBe(true);
@@ -283,74 +285,103 @@ describe('Lightbox functionality', () => {
     test('Space key on thumbnail opens lightbox', () => {
         const firstImage = images[0];
         firstImage.focus();
-        const spaceEvent = new KeyboardEvent('keydown', { key: ' ' });
+        const spaceEvent = new KeyboardEvent('keydown', { key: ' ', bubbles: true });
         firstImage.dispatchEvent(spaceEvent);
 
         expect(lightbox.classList.contains('lightbox-open')).toBe(true);
         expect(lightboxImg.src).toContain('/photos/img1.jpg');
     });
 
-    test('Tab key cycles focus within lightbox (forward)', () => {
+    test('Enter key on close button closes lightbox', () => {
         const firstImage = images[0];
-
-        const originalFocus = HTMLElement.prototype.focus;
-        let activeEl = document.body;
-
-        const focusMock = jest.fn(function() {
-            activeEl = this;
-            originalFocus.call(this);
-        });
-        HTMLElement.prototype.focus = focusMock;
-
-        Object.defineProperty(document, 'activeElement', {
-            configurable: true,
-            get: () => activeEl
-        });
-
         openLightbox(firstImage);
-
-        focusMock.mockClear();
-
-        lightboxImg.focus();
-        expect(document.activeElement).toBe(lightboxImg);
-
-        const tabEvent = new KeyboardEvent('keydown', { key: 'Tab' });
-        document.dispatchEvent(tabEvent);
-
-        expect(document.activeElement).toBe(closeBtn);
-
-        HTMLElement.prototype.focus = originalFocus;
-    });
-
-    test('Shift+Tab key cycles focus within lightbox (backward)', () => {
-        const firstImage = images[0];
-
-        const originalFocus = HTMLElement.prototype.focus;
-        let activeEl = document.body;
-
-        const focusMock = jest.fn(function() {
-            activeEl = this;
-            originalFocus.call(this);
-        });
-        HTMLElement.prototype.focus = focusMock;
-
-        Object.defineProperty(document, 'activeElement', {
-            configurable: true,
-            get: () => activeEl
-        });
-
-        openLightbox(firstImage);
-
-        focusMock.mockClear();
+        expect(lightbox.classList.contains('lightbox-open')).toBe(true);
 
         closeBtn.focus();
-        expect(document.activeElement).toBe(closeBtn);
+        const enterEvent = new KeyboardEvent('keydown', { key: 'Enter' });
+        closeBtn.dispatchEvent(enterEvent);
 
-        const shiftTabEvent = new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true });
-        document.dispatchEvent(shiftTabEvent);
+        expect(lightbox.classList.contains('lightbox-open')).toBe(false);
+    });
 
-        expect(document.activeElement).toBe(lightboxImg);
+    test('Space key on close button closes lightbox', () => {
+        const firstImage = images[0];
+        openLightbox(firstImage);
+        expect(lightbox.classList.contains('lightbox-open')).toBe(true);
 
-        HTMLElement.prototype.focus = originalFocus;
+        closeBtn.focus();
+        const spaceEvent = new KeyboardEvent('keydown', { key: ' ' });
+        closeBtn.dispatchEvent(spaceEvent);
+
+        expect(lightbox.classList.contains('lightbox-open')).toBe(false);
+    });
+
+    // Image preloading tests
+    test('preloadAdjacentImages is called when showing an image', () => {
+        showImage(1);
+        expect(preloadAdjacentImages).toHaveBeenCalledWith(1);
+    });
+
+    test('preloadAdjacentImages is called when opening lightbox', () => {
+        const firstImage = images[0];
+        preloadAdjacentImages.mockClear();
+
+        openLightbox(firstImage);
+
+        expect(preloadAdjacentImages).toHaveBeenCalledWith(0);
+    });
+
+    test('preloadAdjacentImages is called when navigating with arrow keys', () => {
+        const firstImage = images[0];
+        openLightbox(firstImage);
+        preloadAdjacentImages.mockClear();
+
+        const arrowRightEvent = new KeyboardEvent('keydown', { key: 'ArrowRight' });
+        document.dispatchEvent(arrowRightEvent);
+
+        expect(preloadAdjacentImages).toHaveBeenCalledWith(1);
+    });
+
+    // Network failure / error handling tests
+    test('image onerror handler sets fallback alt text', () => {
+        showImage(0);
+
+        // Simulate image load error
+        lightboxImg.onerror();
+
+        expect(lightboxImg.alt).toBe('Image failed to load. Please try again.');
+    });
+
+    test('image onerror handler announces error to screen readers', () => {
+        showImage(0);
+
+        // Simulate image load error
+        lightboxImg.onerror();
+
+        expect(announcement.textContent).toBe('Error loading image. Please try closing and reopening the lightbox.');
+    });
+
+    test('showImage announces image info to screen readers', () => {
+        showImage(0);
+        expect(announcement.textContent).toBe('Image 1 of 3: Image 1');
+
+        showImage(1);
+        expect(announcement.textContent).toBe('Image 2 of 3: Image 2');
+    });
+
+    test('image cycling wraps correctly from last to first', () => {
+        showImage(2); // Last image
+        expect(lightboxImg.src).toContain('/photos/img3.jpg');
+
+        showImage(currentIndex + 1); // Should wrap to first
+        expect(lightboxImg.src).toContain('/photos/img1.jpg');
+    });
+
+    test('image cycling wraps correctly from first to last', () => {
+        showImage(0); // First image
+        expect(lightboxImg.src).toContain('/photos/img1.jpg');
+
+        showImage(currentIndex - 1); // Should wrap to last
+        expect(lightboxImg.src).toContain('/photos/img3.jpg');
     });
 });

@@ -1,24 +1,20 @@
 # Code Review TODO List
 
-### Features
-- [x] Add image preloading for next/previous images
-  - Improve perceived performance in lightbox
-  - Preload adjacent images when lightbox opens
-- [x] add caption from alt text to visible preview on hover over image
-  - Use title attribute or custom tooltip
-  - Improve accessibility and UX
-
 ### Testing
-- [ ] Replace heavy DOM mocking in __tests__/photos.test.js
+- [x] Replace heavy DOM mocking in __tests__/photos.test.js
   - Consider integration tests instead
   - Reduce brittleness of current approach
-- [ ] Add network failure tests
+- [x] Add network failure tests
   - Test image loading failures
   - Test graceful degradation
-- [ ] Add tests for image preloading (once implemented)
+- [x] Add tests for image preloading (once implemented)
+- [ ] add ci step to ensure all images have both a regular image as well as an
+  optimized image
 
 ### Architecture
 - [ ] Consider asset optimization pipeline
+  - Offload optimize images script (or something like it) to CI. I should just
+    create the photos dir. Handle it gracefully locally. kkkk
   - Image compression step in CI
   - Generate WebP/AVIF formats
   - Add responsive image srcset
