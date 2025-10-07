@@ -58,11 +58,6 @@ This script requires the `imagemagick` library. You can install it with Homebrew
 brew install imagemagick
 ```
 
-**Debian/Ubuntu:**
-```bash
-sudo apt-get install imagemagick
-```
-
 ## Linting
 
 This project uses Stylelint for CSS and HTMLHint for HTML to maintain code quality and consistency.
