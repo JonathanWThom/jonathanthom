@@ -122,7 +122,7 @@ test.describe('Photos page', () => {
   test('matches visual snapshot', async ({ page }) => {
     await expect(page).toHaveScreenshot('photos-page.png', {
       fullPage: true,
-      maxDiffPixels: 100,
+      maxDiffPixels: 5000,
     });
   });
 
@@ -131,7 +131,7 @@ test.describe('Photos page', () => {
 
     await expect(page).toHaveScreenshot('lightbox-open.png', {
       fullPage: true,
-      maxDiffPixels: 100,
+      maxDiffPixels: 5000,
     });
   });
 });

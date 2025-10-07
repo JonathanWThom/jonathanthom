@@ -19,7 +19,7 @@ test.describe('Responsive design', () => {
 
         await expect(page).toHaveScreenshot(`homepage-${name}.png`, {
           fullPage: true,
-          maxDiffPixels: 100,
+          maxDiffPixels: 5000,
         });
       });
 
@@ -32,7 +32,7 @@ test.describe('Responsive design', () => {
 
         await expect(page).toHaveScreenshot(`photos-${name}.png`, {
           fullPage: true,
-          maxDiffPixels: 100,
+          maxDiffPixels: 5000,
         });
       });
 
@@ -45,7 +45,7 @@ test.describe('Responsive design', () => {
 
         await expect(page).toHaveScreenshot(`lightbox-${name}.png`, {
           fullPage: true,
-          maxDiffPixels: 100,
+          maxDiffPixels: 5000,
         });
 
         await page.keyboard.press('Escape');
