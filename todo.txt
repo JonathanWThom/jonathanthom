@@ -8,8 +8,6 @@
   - Test image loading failures
   - Test graceful degradation
 - [x] Add tests for image preloading (once implemented)
-- [ ] add ci step to ensure all images have both a regular image as well as an
-  optimized image
 
 ### Architecture
 - [ ] Consider asset optimization pipeline
@@ -23,9 +21,9 @@
 ## Code Issues Noted
 
 ### photos.js:61-62
-- handleKeyDown defined inside openLightbox() but referenced in closeLightbox()
-- Works but fragile pattern
-- Consider making it a module-level function
+- [x] handleKeyDown defined inside openLightbox() but referenced in closeLightbox()
+- [x] Works but fragile pattern
+- [x] Consider making it a module-level function (already fixed - handleKeyDown is module-level)
 
 ### photos.js:27-31
 - [x] No error handling if image fails to load
