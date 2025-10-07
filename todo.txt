@@ -1,45 +1,13 @@
 # Code Review TODO List
 
-### Testing
-- [x] Replace heavy DOM mocking in __tests__/photos.test.js
-  - Consider integration tests instead
-  - Reduce brittleness of current approach
-- [x] Add network failure tests
-  - Test image loading failures
-  - Test graceful degradation
-- [x] Add tests for image preloading (once implemented)
-
 ### Architecture
 - [ ] Consider asset optimization pipeline
   - Offload optimize images script (or something like it) to CI. I should just
-    create the photos dir. Handle it gracefully locally. kkkk
+    create the photos dir. Handle it gracefully locally.
+  - Use a library like sharp to generate optimized images. make sure all photos
+    have corresponding optimized versions in ci maybe?
   - Image compression step in CI
   - Generate WebP/AVIF formats
   - Add responsive image srcset
   - May be overkill for personal site
 
-## Code Issues Noted
-
-### photos.js:61-62
-- [x] handleKeyDown defined inside openLightbox() but referenced in closeLightbox()
-- [x] Works but fragile pattern
-- [x] Consider making it a module-level function (already fixed - handleKeyDown is module-level)
-
-### photos.js:27-31
-- [x] No error handling if image fails to load
-- [x] Add onerror handler with fallback
-
-### Configuration
-- [x] .npmrc contains pnpm config but npm still used by some tools
-  - Fixed by renaming to .pnpmrc
-- playwright.config.js has unexplained hardcoded timeouts
-- package.json ci script doesn't perfectly match GitHub Actions workflow
-
-## Completed
-- [x] Fix pnpm lockfile checksum issue
-- [x] Update visual snapshots for lightbox
-- [x] Add playwright-report to gitignore
-- [x] Verify all CI tests pass
-- [x] Comprehensive code review
-- [x] Fix npm warnings from serve command (renamed .npmrc to .pnpmrc)
-- [x] Install Chromium for Pa11y in CI accessibility tests

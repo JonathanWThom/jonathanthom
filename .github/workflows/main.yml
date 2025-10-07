@@ -1,5 +1,9 @@
 name: CI/CD Pipeline
 
+# Note: Jobs run in parallel in CI for faster builds. To run the same tests locally
+# in sequence, use: pnpm run ci
+# For CI setup locally: pnpm run ci:setup
+
 on:
   push:
     branches:
