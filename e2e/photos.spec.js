@@ -16,7 +16,7 @@ test.describe('Photos page', () => {
 
   test('displays photo gallery', async ({ page }) => {
     const photos = page.locator('[data-photos-container] img');
-    await expect(photos).toHaveCount(9);
+    await expect(photos).toHaveCount(15);
 
     const firstPhoto = photos.first();
     await expect(firstPhoto).toBeVisible();
@@ -105,7 +105,7 @@ test.describe('Photos page', () => {
 
     const lightboxImg = page.locator('[data-lightbox-img]');
     const src = await lightboxImg.getAttribute('src');
-    expect(src).toContain('E3725A1B');
+    expect(src).toContain('IMG_3249');
   });
 
   test('lightbox has focusable elements', async ({ page }) => {
