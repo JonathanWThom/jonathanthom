@@ -3,9 +3,9 @@ module.exports = {
     baseDir: './',
     middleware: [
       function (req, res, next) {
-        // Rewrite /photos to /photos.html
+        // Rewrite /photos to /photos/index.html
         if (req.url === '/photos' || req.url === '/photos/') {
-          req.url = '/photos.html';
+          req.url = '/photos/index.html';
         }
         // Rewrite /favicon.ico to /images/favicon.ico
         if (req.url === '/favicon.ico') {
