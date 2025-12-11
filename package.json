@@ -17,7 +17,8 @@
     "lint": "bun run lint:css && bun run lint:html",
     "lint:fix": "stylelint \"**/*.css\" --fix",
     "ci": "bun run lint && bun test && bun run test:e2e",
-    "ci:setup": "bun install --frozen-lockfile && bun x playwright install --with-deps chromium"
+    "ci:setup": "bun install --frozen-lockfile && bun x playwright install --with-deps chromium",
+    "add-photo": "bun scripts/add-photo.ts"
   },
   "packageManager": "bun@1.2.0",
   "keywords": [],

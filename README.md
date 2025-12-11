@@ -21,6 +21,6 @@ bun run lint              # Run linters
 bun run lint:fix          # Fix CSS issues
 
 # Images
-./scripts/add-photo.sh /path/to/photo.jpg  # Add photo to gallery (requires imagemagick)
-./scripts/optimize-images.sh [directory]   # Batch optimize images
+bun run add-photo /path/to/photo.jpg   # Add photo to gallery (requires imagemagick)
+./scripts/optimize-images.sh [dir]     # Batch optimize images
 ```
