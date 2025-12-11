@@ -1,6 +1,7 @@
 {
   "rewrites": [
+    { "source": "/photos", "destination": "/photos/index.html" },
     { "source": "/favicon.ico", "destination": "/images/favicon.ico" }
   ],
-  "cleanUrls": true
+  "trailingSlash": true
 }
