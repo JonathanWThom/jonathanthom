@@ -33,6 +33,7 @@
     "browser-sync": "^3.0.4",
     "htmlhint": "^1.8.0",
     "jsdom": "^26.1.0",
+    "sharp": "^0.34.5",
     "stylelint": "^16.26.1",
     "stylelint-config-standard": "^39.0.1"
   }

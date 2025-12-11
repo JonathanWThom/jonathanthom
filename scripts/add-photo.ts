@@ -2,7 +2,7 @@
 
 /**
  * Add a photo to the gallery
- * Usage: bun scripts/add-photo.ts /path/to/photo.jpg
+ * Usage: bun run add-photo /path/to/photo.jpg
  *
  * This script:
  * 1. Prompts for a description
@@ -11,29 +11,21 @@
  * 4. Adds the HTML to the top of the photo gallery
  */
 
-import { $ } from "bun";
+import sharp from "sharp";
 import { basename, join, dirname } from "path";
 import { existsSync } from "fs";
 
 const QUALITY = 85;
+const WIDTH = 1200;
 const PROJECT_DIR = dirname(dirname(import.meta.path));
 const OPTIMIZED_DIR = join(PROJECT_DIR, "photos", "optimized");
 const HTML_FILE = join(PROJECT_DIR, "photos", "index.html");
 
 async function main() {
-  // Check if imagemagick is installed
-  try {
-    await $`which magick`.quiet();
-  } catch {
-    console.error("Error: imagemagick is not installed.");
-    console.error("Install with: brew install imagemagick");
-    process.exit(1);
-  }
-
   // Check if a file was provided
   const inputFile = process.argv[2];
   if (!inputFile) {
-    console.error("Usage: bun scripts/add-photo.ts /path/to/photo.jpg");
+    console.error("Usage: bun run add-photo /path/to/photo.jpg");
     process.exit(1);
   }
 
@@ -62,17 +54,22 @@ async function main() {
   console.log();
 
   process.stdout.write("Enter a description for this photo: ");
-  const description = (await Bun.stdin.text()).trim().split('\n')[0];
+  const description = (await Bun.stdin.text()).trim().split("\n")[0];
 
   if (!description) {
     console.error("Error: Description cannot be empty.");
     process.exit(1);
   }
 
-  // Optimize the image
+  // Optimize the image with sharp
   console.log();
   console.log("Optimizing image...");
-  await $`magick ${inputFile} -resize 1200x -quality ${QUALITY} ${outputPath}`;
+
+  await sharp(inputFile)
+    .resize(WIDTH, null, { withoutEnlargement: true })
+    .jpeg({ quality: QUALITY })
+    .toFile(outputPath);
+
   console.log(`Created: photos/optimized/${outputName}`);
 
   // Read the HTML file
@@ -88,7 +85,8 @@ async function main() {
 
   const newHtml =
     htmlContent.slice(0, insertPoint) +
-    "\n" + imgTag +
+    "\n" +
+    imgTag +
     htmlContent.slice(insertPoint);
 
   // Write the updated HTML
