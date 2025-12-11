@@ -12,8 +12,9 @@ import { existsSync } from 'fs';
 const QUALITY = 85;
 const WIDTH = 1200;
 const PROJECT_DIR = dirname(dirname(import.meta.path));
-const OPTIMIZED_DIR = join(PROJECT_DIR, 'photos', 'optimized');
-const HTML_FILE = join(PROJECT_DIR, 'photos', 'index.html');
+const PHOTOS_DIR = join(PROJECT_DIR, 'photos');
+const OPTIMIZED_DIR = join(PHOTOS_DIR, 'optimized');
+const HTML_FILE = join(PHOTOS_DIR, 'index.html');
 
 async function main() {
   const inputFile = process.argv[2];
@@ -32,8 +33,10 @@ async function main() {
   const outputName = `${filenameNoExt}.jpg`;
   const outputPath = join(OPTIMIZED_DIR, outputName);
 
-  if (existsSync(outputPath)) {
-    console.error(`Error: '${outputName}' already exists in photos/optimized/`);
+  const fullSizePath = join(PHOTOS_DIR, outputName);
+
+  if (existsSync(outputPath) || existsSync(fullSizePath)) {
+    console.error(`Error: '${outputName}' already exists in photos/`);
     console.error('Remove it first or rename your input file.');
     process.exit(1);
   }
@@ -43,7 +46,10 @@ async function main() {
   console.log();
 
   process.stdout.write('Enter a description for this photo: ');
-  const description = (await Bun.stdin.text()).trim().split('\n')[0];
+  const reader = Bun.stdin.stream().getReader();
+  const { value } = await reader.read();
+  reader.releaseLock();
+  const description = new TextDecoder().decode(value).trim();
 
   if (!description) {
     console.error('Error: Description cannot be empty.');
@@ -51,8 +57,16 @@ async function main() {
   }
 
   console.log();
-  console.log('Optimizing image...');
+  console.log('Processing image...');
 
+  // Copy full-size image (convert to jpg if needed)
+  await sharp(inputFile)
+    .jpeg({ quality: 95 })
+    .toFile(fullSizePath);
+
+  console.log(`Created: photos/${outputName}`);
+
+  // Create optimized thumbnail
   await sharp(inputFile)
     .resize(WIDTH, null, { withoutEnlargement: true })
     .jpeg({ quality: QUALITY })
@@ -82,7 +96,7 @@ async function main() {
   console.log(`HTML added to: photos/index.html`);
   console.log();
   console.log("Don't forget to commit your changes:");
-  console.log(`  git add photos/optimized/${outputName} photos/index.html`);
+  console.log(`  git add photos/${outputName} photos/optimized/${outputName} photos/index.html`);
   console.log(`  git commit -m "Add photo: ${description}"`);
 }
 
