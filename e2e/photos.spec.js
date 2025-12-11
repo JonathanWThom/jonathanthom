@@ -109,6 +109,10 @@ test.describe('Photos page', () => {
 
   test('lightbox cycles from last to first image', async ({ page }) => {
     const photos = page.locator('[data-photos-container] img');
+    const firstPhoto = photos.first();
+    const firstPhotoSrc = await firstPhoto.getAttribute('src');
+    const firstFilename = firstPhotoSrc.split('/').pop();
+
     const lastPhoto = photos.last();
     await lastPhoto.click();
 
@@ -116,7 +120,7 @@ test.describe('Photos page', () => {
 
     const lightboxImg = page.locator('[data-lightbox-img]');
     const src = await lightboxImg.getAttribute('src');
-    expect(src).toContain('IMG_3249');
+    expect(src).toContain(firstFilename);
   });
 
   test('lightbox has focusable elements', async ({ page }) => {
