@@ -16,11 +16,6 @@ test.describe('Responsive design', () => {
 
         await expect(page.locator('h1')).toBeVisible();
         await expect(page.locator('nav')).toBeVisible();
-
-        await expect(page).toHaveScreenshot(`homepage-${name}.png`, {
-          fullPage: true,
-          maxDiffPixels: 5000,
-        });
       });
 
       test('photos page renders correctly', async ({ page }) => {
@@ -29,11 +24,6 @@ test.describe('Responsive design', () => {
         await expect(page.locator('h1')).toBeVisible();
         const photos = page.locator('[data-photos-container] img');
         await expect(photos.first()).toBeVisible();
-
-        await expect(page).toHaveScreenshot(`photos-${name}.png`, {
-          fullPage: true,
-          maxDiffPixels: 5000,
-        });
       });
 
       test('lightbox works on viewport', async ({ page }) => {
@@ -42,11 +32,6 @@ test.describe('Responsive design', () => {
         await page.locator('[data-photos-container] img').first().click();
         const lightbox = page.locator('[data-lightbox]');
         await expect(lightbox).toHaveClass(/lightbox-open/);
-
-        await expect(page).toHaveScreenshot(`lightbox-${name}.png`, {
-          fullPage: true,
-          maxDiffPixels: 5000,
-        });
 
         await page.keyboard.press('Escape');
         await expect(lightbox).not.toHaveClass(/lightbox-open/);

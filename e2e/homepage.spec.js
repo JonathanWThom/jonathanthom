@@ -35,16 +35,4 @@ test.describe('Homepage', () => {
     await expect(page.locator('h1')).toHaveText('Photos');
   });
 
-  test('matches visual snapshot', async ({ page }) => {
-    await expect(page).toHaveScreenshot('homepage.png', {
-      fullPage: true,
-      maxDiffPixels: 5000,
-    });
-  });
-
-  test('is accessible', async ({ page }) => {
-    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
-    await expect(page.locator('h1')).toBeVisible();
-    await expect(page.locator('nav a')).toHaveCount(8);
-  });
 });

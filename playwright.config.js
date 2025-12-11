@@ -20,7 +20,7 @@ module.exports = defineConfig({
     },
   ],
   webServer: {
-    command: 'pnpm start',
+    command: 'bun start',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
     // 2 minute timeout allows sufficient time for server startup, dependency installation, and port binding

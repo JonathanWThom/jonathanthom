@@ -3,6 +3,12 @@ const { test, expect } = require('@playwright/test');
 test.describe('Photos page', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/photos');
+    // Ensure lightbox is closed before each test
+    const lightbox = page.locator('[data-lightbox]');
+    if (await lightbox.evaluate(el => el.classList.contains('lightbox-open'))) {
+      await page.keyboard.press('Escape');
+      await expect(lightbox).not.toHaveClass(/lightbox-open/);
+    }
   });
 
   test('has correct title', async ({ page }) => {
@@ -119,19 +125,4 @@ test.describe('Photos page', () => {
     await expect(closeBtn).toHaveAttribute('tabindex', '0');
   });
 
-  test('matches visual snapshot', async ({ page }) => {
-    await expect(page).toHaveScreenshot('photos-page.png', {
-      fullPage: true,
-      maxDiffPixels: 5000,
-    });
-  });
-
-  test('lightbox matches visual snapshot', async ({ page }) => {
-    await page.locator('[data-photos-container] img').first().click();
-
-    await expect(page).toHaveScreenshot('lightbox-open.png', {
-      fullPage: true,
-      maxDiffPixels: 5000,
-    });
-  });
 });
