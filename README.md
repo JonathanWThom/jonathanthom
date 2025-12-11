@@ -1,25 +1,12 @@
-# Jonathan Thom's Personal Website
+# jonathanthom.com
 
-This is the source code for my personal website, jonathanthom.com.
-
-## Development
-
-This project uses [pnpm](https://pnpm.io/) as the package manager.
-
-### Prerequisites
-
-- Node.js 24.9.0 (managed via `.node-version` and `.tool-versions` files)
-- pnpm 10.18.0+ (install with `npm install -g pnpm`)
+This is the source code for [my personal website](https://jonathanthom.com).
 
 ### Setup
-
-First-time setup (installs dependencies and Playwright browsers):
 
 ```bash
 pnpm run setup
 ```
-
-This command is idempotent and safe to run multiple times.
 
 ### Running Locally
 
@@ -28,13 +15,6 @@ pnpm dev       # Development with auto-reload
 # or
 pnpm start     # Production server
 ```
-
-### Development Mode
-
-The `pnpm dev` command uses Browser Sync for:
-- Auto-reloading when HTML, CSS, or JS files change
-- Synchronized browser testing across devices
-- Built-in server on port 3000
 
 ## Image Optimization
 
@@ -58,92 +38,17 @@ This script requires the `imagemagick` library. You can install it with Homebrew
 brew install imagemagick
 ```
 
-## Linting
-
-This project uses Stylelint for CSS and HTMLHint for HTML to maintain code quality and consistency.
-
-### Commands
-
-- **Lint CSS:**
-  ```bash
-  pnpm run lint:css
-  ```
-- **Lint HTML:**
-  ```bash
-  pnpm run lint:html
-  ```
-- **Run All Linters:**
-  ```bash
-  pnpm run lint
-  ```
-- **Fix CSS Issues (where possible):**
-  ```bash
-  pnpm run lint:fix
-  ```
-
-### Accessibility Testing
-
-This project uses [Pa11y CI](https://github.com/pa11y/pa11y-ci) for automated accessibility testing. Tests run against all URLs defined in `sitemap.xml`.
-
-- **Run Accessibility Tests:**
-  ```bash
-  pnpm run test:a11y
-  ```
-
-## Testing
-
-This project uses Jest for unit testing and Playwright for end-to-end testing.
-
-### Run All CI Tests Locally
-
-To run all tests that run in CI (linting, unit tests, E2E tests, and accessibility tests):
+## Useful Commands
 
 ```bash
-pnpm run ci
-```
+# Linting
+pnpm run lint              # Run all linters
+pnpm run lint:fix          # Fix CSS issues
 
-This command runs sequentially:
-1. Linting (CSS + HTML)
-2. Unit tests (Jest)
-3. E2E tests (Playwright)
-4. Accessibility tests (Pa11y CI)
+# Testing
+pnpm test                  # Unit tests
+pnpm run test:e2e          # E2E tests
+pnpm run test:e2e:ui       # E2E tests (UI mode)
+pnpm run test:a11y         # Accessibility tests
+pnpm run ci                # Run all tests
 
-### Unit Tests
-
-- **Run Unit Tests:**
-  ```bash
-  pnpm test
-  ```
-
-### E2E Tests
-
-End-to-end tests are written with Playwright and include:
-- Functional testing of all pages
-- Lightbox interaction testing
-- Visual regression testing with snapshots
-- Responsive design testing across multiple viewports
-
-- **Run E2E Tests:**
-  ```bash
-  pnpm run test:e2e
-  ```
-- **Run E2E Tests in UI Mode:**
-  ```bash
-  pnpm run test:e2e:ui
-  ```
-- **Run E2E Tests in Headed Mode:**
-  ```bash
-  pnpm run test:e2e:headed
-  ```
-- **Update Visual Snapshots:**
-  ```bash
-  pnpm run test:e2e:update-snapshots
-  ```
-
-## Deployment
-
-This website is deployed to GitHub Pages at [jonathanthom.com](https://jonathanthom.com).
-
-### CI/CD Pipeline
-
-The CI/CD pipeline runs all tests in parallel (linting, unit tests, E2E tests, and accessibility tests) on every push to main. All tests must pass for the build to succeed.
