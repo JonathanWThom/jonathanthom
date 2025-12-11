@@ -15,9 +15,8 @@ pnpm start                 # Production server
 # Testing & Linting
 pnpm run ci                # Run all tests
 pnpm test                  # Unit tests
-pnpm run test:e2e          # E2E tests
+pnpm run test:e2e          # E2E tests (includes accessibility)
 pnpm run test:e2e:ui       # E2E tests (UI mode)
-pnpm run test:a11y         # Accessibility tests
 pnpm run lint              # Run linters
 pnpm run lint:fix          # Fix CSS issues
 
