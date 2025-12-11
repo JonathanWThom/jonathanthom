@@ -1,26 +1,29 @@
-/**
- * @jest-environment jsdom
- */
+import { describe, test, expect, beforeEach, afterEach, mock, spyOn } from 'bun:test';
+import { JSDOM } from 'jsdom';
 
 describe('Lightbox functionality', () => {
-    let lightbox, lightboxImg, closeBtn, photosContainer, images, announcement;
+    let dom, document, lightbox, lightboxImg, closeBtn, photosContainer, images, announcement;
     let showImage, openLightbox, closeLightbox, handleKeyDown, preloadAdjacentImages;
     let currentIndex, focusedElementBeforeModal;
 
     beforeEach(() => {
-        // Setup DOM
-        document.body.innerHTML = `
-            <div class="photos" data-photos-container>
-                <img src="/photos/optimized/img1.jpg" alt="Image 1" tabindex="0">
-                <img src="/photos/optimized/img2.jpg" alt="Image 2" tabindex="0">
-                <img src="/photos/optimized/img3.jpg" alt="Image 3" tabindex="0">
-            </div>
-            <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" data-lightbox>
-                <span class="close" aria-label="Close" data-lightbox-close tabindex="0">&times;</span>
-                <img class="lightbox-content" id="lightbox-img" alt="" data-lightbox-img tabindex="0">
-                <div class="sr-only" aria-live="polite" aria-atomic="true" data-lightbox-announcement></div>
-            </div>
-        `;
+        // Setup DOM using jsdom
+        dom = new JSDOM(`<!DOCTYPE html>
+            <body>
+                <div class="photos" data-photos-container>
+                    <img src="/photos/optimized/img1.jpg" alt="Image 1" tabindex="0">
+                    <img src="/photos/optimized/img2.jpg" alt="Image 2" tabindex="0">
+                    <img src="/photos/optimized/img3.jpg" alt="Image 3" tabindex="0">
+                </div>
+                <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" data-lightbox>
+                    <span class="close" aria-label="Close" data-lightbox-close tabindex="0">&times;</span>
+                    <img class="lightbox-content" id="lightbox-img" alt="" data-lightbox-img tabindex="0">
+                    <div class="sr-only" aria-live="polite" aria-atomic="true" data-lightbox-announcement></div>
+                </div>
+            </body>
+        `, { url: 'http://localhost' });
+
+        document = dom.window.document;
 
         // Get DOM elements
         lightbox = document.querySelector('[data-lightbox]');
@@ -34,7 +37,7 @@ describe('Lightbox functionality', () => {
         focusedElementBeforeModal = null;
 
         // Define functions (lightweight implementation for testing)
-        preloadAdjacentImages = jest.fn((index) => {
+        preloadAdjacentImages = mock((index) => {
             const nextIndex = (index + 1) % images.length;
             const prevIndex = index - 1 < 0 ? images.length - 1 : index - 1;
             // Simulate preloading without actual network requests
@@ -177,7 +180,7 @@ describe('Lightbox functionality', () => {
 
     test('openLightbox displays lightbox and sets focus', () => {
         const firstImage = images[0];
-        const closeBtnFocusSpy = jest.spyOn(closeBtn, 'focus');
+        const closeBtnFocusSpy = spyOn(closeBtn, 'focus');
         firstImage.focus();
 
         openLightbox(firstImage);
@@ -186,12 +189,11 @@ describe('Lightbox functionality', () => {
         expect(lightboxImg.src).toContain('/photos/img1.jpg');
         expect(lightboxImg.alt).toBe('Image 1');
         expect(closeBtnFocusSpy).toHaveBeenCalled();
-        closeBtnFocusSpy.mockRestore();
     });
 
     test('closeLightbox hides lightbox and restores focus', () => {
         const firstImage = images[0];
-        const firstImageFocusSpy = jest.spyOn(firstImage, 'focus');
+        const firstImageFocusSpy = spyOn(firstImage, 'focus');
         firstImage.focus();
         openLightbox(firstImage);
 
@@ -199,7 +201,6 @@ describe('Lightbox functionality', () => {
 
         expect(lightbox.classList.contains('lightbox-open')).toBe(false);
         expect(firstImageFocusSpy).toHaveBeenCalled();
-        firstImageFocusSpy.mockRestore();
     });
 
     test('Escape key closes lightbox', () => {
@@ -207,7 +208,7 @@ describe('Lightbox functionality', () => {
         firstImage.focus();
         openLightbox(firstImage);
 
-        const escapeEvent = new KeyboardEvent('keydown', { key: 'Escape' });
+        const escapeEvent = new dom.window.KeyboardEvent('keydown', { key: 'Escape' });
         document.dispatchEvent(escapeEvent);
 
         expect(lightbox.classList.contains('lightbox-open')).toBe(false);
@@ -218,7 +219,7 @@ describe('Lightbox functionality', () => {
         firstImage.focus();
         openLightbox(firstImage);
 
-        const arrowRightEvent = new KeyboardEvent('keydown', { key: 'ArrowRight' });
+        const arrowRightEvent = new dom.window.KeyboardEvent('keydown', { key: 'ArrowRight' });
         document.dispatchEvent(arrowRightEvent);
 
         expect(lightboxImg.src).toContain('/photos/img2.jpg');
@@ -230,7 +231,7 @@ describe('Lightbox functionality', () => {
         secondImage.focus();
         openLightbox(secondImage);
 
-        const arrowLeftEvent = new KeyboardEvent('keydown', { key: 'ArrowLeft' });
+        const arrowLeftEvent = new dom.window.KeyboardEvent('keydown', { key: 'ArrowLeft' });
         document.dispatchEvent(arrowLeftEvent);
 
         expect(lightboxImg.src).toContain('/photos/img1.jpg');
@@ -275,7 +276,7 @@ describe('Lightbox functionality', () => {
     test('Enter key on thumbnail opens lightbox', () => {
         const firstImage = images[0];
         firstImage.focus();
-        const enterEvent = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true });
+        const enterEvent = new dom.window.KeyboardEvent('keydown', { key: 'Enter', bubbles: true });
         firstImage.dispatchEvent(enterEvent);
 
         expect(lightbox.classList.contains('lightbox-open')).toBe(true);
@@ -285,7 +286,7 @@ describe('Lightbox functionality', () => {
     test('Space key on thumbnail opens lightbox', () => {
         const firstImage = images[0];
         firstImage.focus();
-        const spaceEvent = new KeyboardEvent('keydown', { key: ' ', bubbles: true });
+        const spaceEvent = new dom.window.KeyboardEvent('keydown', { key: ' ', bubbles: true });
         firstImage.dispatchEvent(spaceEvent);
 
         expect(lightbox.classList.contains('lightbox-open')).toBe(true);
@@ -298,7 +299,7 @@ describe('Lightbox functionality', () => {
         expect(lightbox.classList.contains('lightbox-open')).toBe(true);
 
         closeBtn.focus();
-        const enterEvent = new KeyboardEvent('keydown', { key: 'Enter' });
+        const enterEvent = new dom.window.KeyboardEvent('keydown', { key: 'Enter' });
         closeBtn.dispatchEvent(enterEvent);
 
         expect(lightbox.classList.contains('lightbox-open')).toBe(false);
@@ -310,7 +311,7 @@ describe('Lightbox functionality', () => {
         expect(lightbox.classList.contains('lightbox-open')).toBe(true);
 
         closeBtn.focus();
-        const spaceEvent = new KeyboardEvent('keydown', { key: ' ' });
+        const spaceEvent = new dom.window.KeyboardEvent('keydown', { key: ' ' });
         closeBtn.dispatchEvent(spaceEvent);
 
         expect(lightbox.classList.contains('lightbox-open')).toBe(false);
@@ -336,7 +337,7 @@ describe('Lightbox functionality', () => {
         openLightbox(firstImage);
         preloadAdjacentImages.mockClear();
 
-        const arrowRightEvent = new KeyboardEvent('keydown', { key: 'ArrowRight' });
+        const arrowRightEvent = new dom.window.KeyboardEvent('keydown', { key: 'ArrowRight' });
         document.dispatchEvent(arrowRightEvent);
 
         expect(preloadAdjacentImages).toHaveBeenCalledWith(1);

@@ -4,22 +4,22 @@
   "description": "Personal website for Jonathan Thom",
   "main": "index.html",
   "scripts": {
-    "setup": "pnpm install && pnpm exec playwright install --with-deps chromium",
+    "setup": "bun install && bun x playwright install --with-deps chromium",
     "start": "serve",
     "dev": "browser-sync start --config bs-config.js",
-    "test": "jest",
-    "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui",
-    "test:e2e:headed": "playwright test --headed",
-    "test:e2e:update-snapshots": "playwright test --update-snapshots",
+    "test": "bun test",
+    "test:e2e": "bun x playwright test",
+    "test:e2e:ui": "bun x playwright test --ui",
+    "test:e2e:headed": "bun x playwright test --headed",
+    "test:e2e:update-snapshots": "bun x playwright test --update-snapshots",
     "lint:css": "stylelint \"**/*.css\"",
     "lint:html": "htmlhint \"**/*.html\" --ignore \"playwright-report/**,test-results/**\"",
-    "lint": "pnpm run lint:css && pnpm run lint:html",
+    "lint": "bun run lint:css && bun run lint:html",
     "lint:fix": "stylelint \"**/*.css\" --fix",
-    "ci": "pnpm run lint && pnpm test && pnpm run test:e2e",
-    "ci:setup": "pnpm install --frozen-lockfile && pnpm exec playwright install --with-deps chromium"
+    "ci": "bun run lint && bun test && bun run test:e2e",
+    "ci:setup": "bun install --frozen-lockfile && bun x playwright install --with-deps chromium"
   },
-  "packageManager": "pnpm@10.25.0",
+  "packageManager": "bun@1.2.0",
   "keywords": [],
   "author": "Jonathan Thom",
   "license": "ISC",
@@ -31,15 +31,8 @@
     "@playwright/test": "^1.57.0",
     "browser-sync": "^3.0.4",
     "htmlhint": "^1.8.0",
-    "jest": "^30.2.0",
-    "jest-environment-jsdom": "^30.2.0",
+    "jsdom": "^26.1.0",
     "stylelint": "^16.26.1",
     "stylelint-config-standard": "^39.0.1"
-  },
-  "pnpm": {
-    "overrides": {
-      "glob@<11.1.0": ">=11.1.0",
-      "js-yaml@<4.1.1": ">=4.1.1"
-    }
   }
 }
