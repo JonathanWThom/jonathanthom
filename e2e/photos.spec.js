@@ -11,7 +11,7 @@ test.describe('Photos page', () => {
 
   test('displays page heading and home link', async ({ page }) => {
     await expect(page.locator('h1')).toHaveText('Photos');
-    await expect(page.getByRole('link', { name: 'Home' })).toHaveAttribute('href', '/index.html');
+    await expect(page.getByRole('link', { name: 'Home' })).toHaveAttribute('href', '/');
   });
 
   test('displays photo gallery', async ({ page }) => {
