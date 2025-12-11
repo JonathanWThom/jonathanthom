@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Setup script for jonathanthom.com
+# Installs Bun if needed, then runs project setup
+
+set -e
+
+# Check if bun is installed
+if ! command -v bun &> /dev/null; then
+    echo "Bun not found. Installing..."
+    curl -fsSL https://bun.sh/install | bash
+
+    # Source the shell config to get bun in PATH
+    export BUN_INSTALL="$HOME/.bun"
+    export PATH="$BUN_INSTALL/bin:$PATH"
+
+    echo ""
+fi
+
+echo "Running bun setup..."
+bun run setup
