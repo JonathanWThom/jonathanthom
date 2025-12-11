@@ -18,7 +18,7 @@ test.describe('Homepage', () => {
     const nav = page.locator('nav');
     await expect(nav.locator('a')).toHaveCount(8);
 
-    await expect(nav.getByRole('link', { name: 'Photos' })).toHaveAttribute('href', 'photos.html');
+    await expect(nav.getByRole('link', { name: 'Photos' })).toHaveAttribute('href', 'photos');
     await expect(nav.getByRole('link', { name: 'Email' })).toHaveAttribute('href', 'mailto:jonathanthom@hey.com');
     await expect(nav.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/jonathanwthom');
     await expect(nav.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute('href', 'https://www.linkedin.com/in/jonathan-thom/');

@@ -140,14 +140,10 @@ End-to-end tests are written with Playwright and include:
   pnpm run test:e2e:update-snapshots
   ```
 
-## Deployment (Heroku)
+## Deployment
 
-This website is deployed to Heroku via a continuous integration (CI) step. The `Procfile` in the root directory specifies how to run the application.
+This website is deployed to GitHub Pages at [jonathanthom.com](https://jonathanthom.com).
 
-### Heroku Configuration
+### CI/CD Pipeline
 
-The project uses:
-- **Node.js 24.9.0** (specified in `.node-version` and read by Heroku buildpack)
-- **pnpm** as package manager (Heroku automatically detects `pnpm-lock.yaml` and uses pnpm)
-
-The CI/CD pipeline runs all tests in parallel (linting, unit tests, E2E tests, and accessibility tests) before deploying to Heroku. All tests must pass for deployment to proceed.
+The CI/CD pipeline runs all tests in parallel (linting, unit tests, E2E tests, and accessibility tests) on every push to main. All tests must pass for the build to succeed.

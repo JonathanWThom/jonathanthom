@@ -24,7 +24,7 @@ test.describe('Responsive design', () => {
       });
 
       test('photos page renders correctly', async ({ page }) => {
-        await page.goto('/photos.html');
+        await page.goto('/photos');
 
         await expect(page.locator('h1')).toBeVisible();
         const photos = page.locator('[data-photos-container] img');
@@ -37,7 +37,7 @@ test.describe('Responsive design', () => {
       });
 
       test('lightbox works on viewport', async ({ page }) => {
-        await page.goto('/photos.html');
+        await page.goto('/photos');
 
         await page.locator('[data-photos-container] img').first().click();
         const lightbox = page.locator('[data-lightbox]');
@@ -73,7 +73,7 @@ test.describe.configure({ mode: 'parallel' });
 
 test('photos grid adapts to mobile @mobile', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/photos.html');
+  await page.goto('/photos');
 
   const photosContainer = page.locator('[data-photos-container]');
   const containerBox = await photosContainer.boundingBox();
@@ -86,7 +86,7 @@ test('photos grid adapts to mobile @mobile', async ({ page }) => {
 
 test('lightbox is full screen on mobile @mobile', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/photos.html');
+  await page.goto('/photos');
 
   await page.locator('[data-photos-container] img').first().click();
 
@@ -99,7 +99,7 @@ test('lightbox is full screen on mobile @mobile', async ({ page }) => {
 
 test('photos grid shows multiple columns @tablet', async ({ page }) => {
   await page.setViewportSize({ width: 1024, height: 1366 });
-  await page.goto('/photos.html');
+  await page.goto('/photos');
 
   const photos = page.locator('[data-photos-container] img');
   const firstBox = await photos.first().boundingBox();
