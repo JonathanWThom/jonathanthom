@@ -1,0 +1,3 @@
+Contact: mailto:jonathanthom@hey.com
+Encryption: https://jonathanthom.com/pgp/jonathanthom.asc
+Preferred-Languages: en
