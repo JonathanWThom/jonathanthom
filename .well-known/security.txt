@@ -1,3 +1,3 @@
-Contact: mailto:jonathanthom@hey.com
+Contact: mailto:me@jonathanthom.com
 Encryption: https://jonathanthom.com/pgp/jonathanthom.asc
 Preferred-Languages: en
