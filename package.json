@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "setup": "bun install && bun x playwright install --with-deps chromium",
-    "start": "serve",
+    "start": "bun scripts/dev-server.js",
     "dev": "bun --watch scripts/dev-server.js",
     "test": "bun x playwright test",
     "test:ui": "bun x playwright test --ui",
@@ -22,9 +22,6 @@
   "keywords": [],
   "author": "Jonathan Thom",
   "license": "ISC",
-  "dependencies": {
-    "serve": "^14.2.5"
-  },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.0",
     "@playwright/test": "^1.57.0",
