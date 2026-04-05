@@ -55,12 +55,14 @@ async function main() {
   console.log('Processing image...');
 
   await sharp(inputFile)
+    .rotate()
     .jpeg({ quality: 95 })
     .toFile(fullSizePath);
 
   console.log(`Created: photos/${outputName}`);
 
   await sharp(inputFile)
+    .rotate()
     .resize(WIDTH, null, { withoutEnlargement: true })
     .jpeg({ quality: QUALITY })
     .toFile(outputPath);
@@ -69,6 +71,7 @@ async function main() {
 
   const webpName = `${filenameNoExt}.webp`;
   await sharp(inputFile)
+    .rotate()
     .resize(WIDTH, null, { withoutEnlargement: true })
     .webp({ quality: QUALITY })
     .toFile(join(OPTIMIZED_DIR, webpName));
@@ -76,6 +79,7 @@ async function main() {
   console.log(`Created: photos/optimized/${webpName}`);
 
   await sharp(inputFile)
+    .rotate()
     .webp({ quality: 90 })
     .toFile(join(PHOTOS_DIR, webpName));
 
