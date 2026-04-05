@@ -1,6 +1,9 @@
 const lightbox = document.querySelector('[data-lightbox]');
 const lightboxImg = document.querySelector('[data-lightbox-img]');
 const closeBtn = document.querySelector('[data-lightbox-close]');
+const prevBtn = document.querySelector('[data-lightbox-prev]');
+const nextBtn = document.querySelector('[data-lightbox-next]');
+const caption = document.querySelector('[data-lightbox-caption]');
 const photosContainer = document.querySelector('[data-photos-container]');
 const images = photosContainer.querySelectorAll('img');
 const pictures = photosContainer.querySelectorAll('picture[data-slug]');
@@ -48,8 +51,15 @@ function showImage(index) {
     lightboxImg.src = getFullSizeSrc(image);
     lightboxImg.alt = image.alt;
 
+    if (caption) {
+        caption.textContent = image.alt;
+    }
+
     lightboxImg.onerror = function() {
         lightboxImg.alt = 'Image failed to load. Please try again.';
+        if (caption) {
+            caption.textContent = '';
+        }
         if (announcement) {
             announcement.textContent = 'Error loading image. Please try closing and reopening the lightbox.';
         }
@@ -77,6 +87,9 @@ function closeLightbox() {
     lightbox.classList.remove('lightbox-open');
     lightboxImg.src = '';
     lightboxImg.alt = '';
+    if (caption) {
+        caption.textContent = '';
+    }
     updateUrl(null);
 
     if (focusedElementBeforeModal) {
@@ -155,6 +168,14 @@ closeBtn.addEventListener('keydown', (e) => {
     }
 });
 
+prevBtn.addEventListener('click', () => {
+    showImage(currentIndex - 1);
+});
+
+nextBtn.addEventListener('click', () => {
+    showImage(currentIndex + 1);
+});
+
 lightbox.addEventListener('click', (e) => {
     if (e.target === lightbox) {
         closeLightbox();
@@ -176,6 +197,9 @@ window.addEventListener('popstate', (e) => {
         lightbox.classList.remove('lightbox-open');
         lightboxImg.src = '';
         lightboxImg.alt = '';
+        if (caption) {
+            caption.textContent = '';
+        }
         if (focusedElementBeforeModal) {
             focusedElementBeforeModal.focus();
         }

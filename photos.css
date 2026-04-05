@@ -53,48 +53,108 @@ nav a {
     opacity: 0.8;
 }
 
+.photos img:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+}
+
 .lightbox {
     display: none;
     position: fixed;
     z-index: 1000;
-    padding-top: 100px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
+    inset: 0;
     background-color: rgb(0 0 0 / 90%);
+    backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .lightbox-open {
-    display: block;
+    display: flex;
 }
 
 .lightbox-content {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 700px;
+    max-width: min(90vw, 900px);
+    max-height: 80vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 2px;
+}
+
+.lightbox-caption {
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    text-align: center;
+    max-width: 600px;
+    margin: var(--spacing-sm) auto 0;
+    padding: 0 var(--spacing-sm);
+    line-height: 1.5;
 }
 
 .close {
     position: absolute;
-    top: 15px;
-    right: 35px;
+    top: var(--spacing-sm);
+    right: var(--spacing-md);
     color: #f1f1f1;
-    font-size: 40px;
+    font-size: 2rem;
     font-weight: bold;
     transition: var(--transition-base);
     cursor: pointer;
+    line-height: 1;
+    z-index: 10;
 }
 
 .close:hover,
 .close:focus-visible {
     color: var(--color-text-muted);
-    text-decoration: none;
 }
 
-.photos img:focus-visible {
+.lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #f1f1f1;
+    font-size: 3rem;
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    transition: var(--transition-base);
+    line-height: 1;
+    z-index: 10;
+    font-family: var(--font-family-mono);
+}
+
+.lightbox-nav:hover,
+.lightbox-nav:focus-visible {
+    color: var(--color-text-muted);
+}
+
+.lightbox-nav:focus-visible {
     outline: 2px solid var(--color-accent);
-    outline-offset: 3px;
+    outline-offset: 4px;
+}
+
+.lightbox-prev {
+    left: var(--spacing-sm);
+}
+
+.lightbox-next {
+    right: var(--spacing-sm);
+}
+
+@media (width <= 640px) {
+    .lightbox-nav {
+        font-size: 2rem;
+    }
+
+    .lightbox-prev {
+        left: var(--spacing-xs);
+    }
+
+    .lightbox-next {
+        right: var(--spacing-xs);
+    }
 }
