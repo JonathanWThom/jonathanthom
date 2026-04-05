@@ -6,15 +6,16 @@
     <title>Page Not Found - Jonathan Thom</title>
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
     <link rel="stylesheet" href="/common.css">
+    <style>body { visibility: hidden; }</style>
     <script>
-      (function() {
-        var path = window.location.pathname;
-        var match = path.match(/^\/photos\/([^/]+)/);
-        if (match) {
-          window.location.replace('/photos/?photo=' + match[1]);
-          return;
-        }
-      })();
+      var match = window.location.pathname.match(/^\/photos\/([^/]+)/);
+      if (match) {
+        window.location.replace('/photos/?photo=' + match[1]);
+      } else {
+        document.addEventListener('DOMContentLoaded', function() {
+          document.body.style.visibility = 'visible';
+        });
+      }
     </script>
 </head>
 <body>

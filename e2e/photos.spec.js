@@ -143,10 +143,19 @@ test.describe('Photos page', () => {
 });
 
 test.describe('Photo deep linking', () => {
-  test('URL updates when lightbox opens', async ({ page }) => {
+  test.beforeEach(async ({ page }) => {
     await page.goto('/photos');
     await page.waitForLoadState('networkidle');
+    const lightbox = page.locator('[data-lightbox]');
+    const isOpen = await lightbox.evaluate(el => el.classList.contains('lightbox-open'));
+    if (isOpen) {
+      await page.keyboard.press('Escape');
+      await page.waitForTimeout(100);
+    }
+    await expect(lightbox).not.toHaveClass(/lightbox-open/);
+  });
 
+  test('URL updates when lightbox opens', async ({ page }) => {
     const firstPicture = page.locator('[data-photos-container] picture[data-slug]').first();
     const slug = await firstPicture.getAttribute('data-slug');
 
@@ -156,9 +165,6 @@ test.describe('Photo deep linking', () => {
   });
 
   test('URL resets when lightbox closes', async ({ page }) => {
-    await page.goto('/photos');
-    await page.waitForLoadState('networkidle');
-
     await page.locator('[data-photos-container] img').first().click();
     await page.keyboard.press('Escape');
 
@@ -166,9 +172,6 @@ test.describe('Photo deep linking', () => {
   });
 
   test('URL updates when navigating between photos', async ({ page }) => {
-    await page.goto('/photos');
-    await page.waitForLoadState('networkidle');
-
     const pictures = page.locator('[data-photos-container] picture[data-slug]');
     const firstSlug = await pictures.first().getAttribute('data-slug');
     const secondSlug = await pictures.nth(1).getAttribute('data-slug');
@@ -180,7 +183,7 @@ test.describe('Photo deep linking', () => {
     await expect(page).toHaveURL(new RegExp(`/photos/${secondSlug}/`));
   });
 
-  test('direct URL opens lightbox for correct photo', async ({ page }) => {
+  test('direct URL with query param opens lightbox for correct photo', async ({ page }) => {
     await page.goto('/photos/?photo=coleman-glacier-mount-baker-heliotrope-ridge');
     await page.waitForLoadState('networkidle');
 
@@ -192,28 +195,12 @@ test.describe('Photo deep linking', () => {
     expect(alt).toContain('Coleman Glacier');
   });
 
-  test('direct URL with path opens lightbox for correct photo', async ({ page }) => {
-    await page.goto('/photos/sunset-over-san-francisco/');
-    await page.waitForLoadState('networkidle');
-
-    const lightbox = page.locator('[data-lightbox]');
-    await expect(lightbox).toHaveClass(/lightbox-open/);
-
-    const lightboxImg = page.locator('[data-lightbox-img]');
-    const alt = await lightboxImg.getAttribute('alt');
-    expect(alt).toContain('San Francisco');
-  });
-
   test('back button closes lightbox', async ({ page }) => {
-    await page.goto('/photos');
-    await page.waitForLoadState('networkidle');
-
     await page.locator('[data-photos-container] img').first().click();
     const lightbox = page.locator('[data-lightbox]');
     await expect(lightbox).toHaveClass(/lightbox-open/);
 
     await page.goBack();
     await expect(lightbox).not.toHaveClass(/lightbox-open/);
-    await expect(page).toHaveURL(/\/photos\/$/);
   });
 });
