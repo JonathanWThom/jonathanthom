@@ -34,28 +34,28 @@ nav a {
     }
 }
 
+.photos picture {
+    display: block;
+    break-inside: avoid;
+    margin-bottom: var(--spacing-sm);
+}
+
 .photos img {
     width: 100%;
     height: auto;
     border-radius: 5px;
     transition: opacity 0.3s ease;
-    margin-bottom: var(--spacing-sm);
     display: block;
-    break-inside: avoid;
 }
 
 .photos img:hover {
     cursor: pointer;
-
-    /* Subtle visual feedback on hover - 80% opacity provides clear indication without being jarring */
     opacity: 0.8;
 }
 
 .lightbox {
     display: none;
     position: fixed;
-
-    /* High z-index ensures lightbox appears above all other page content */
     z-index: 1000;
     padding-top: 100px;
     left: 0;

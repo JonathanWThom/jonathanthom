@@ -1,10 +1,5 @@
 #!/usr/bin/env bun
 
-/**
- * Add a photo to the gallery
- * Usage: bun run add-photo /path/to/photo.jpg
- */
-
 import sharp from 'sharp';
 import { basename, join, dirname } from 'path';
 import { existsSync } from 'fs';
@@ -59,14 +54,12 @@ async function main() {
   console.log();
   console.log('Processing image...');
 
-  // Copy full-size image (convert to jpg if needed)
   await sharp(inputFile)
     .jpeg({ quality: 95 })
     .toFile(fullSizePath);
 
   console.log(`Created: photos/${outputName}`);
 
-  // Create optimized thumbnail
   await sharp(inputFile)
     .resize(WIDTH, null, { withoutEnlargement: true })
     .jpeg({ quality: QUALITY })
@@ -74,10 +67,24 @@ async function main() {
 
   console.log(`Created: photos/optimized/${outputName}`);
 
+  const webpName = `${filenameNoExt}.webp`;
+  await sharp(inputFile)
+    .resize(WIDTH, null, { withoutEnlargement: true })
+    .webp({ quality: QUALITY })
+    .toFile(join(OPTIMIZED_DIR, webpName));
+
+  console.log(`Created: photos/optimized/${webpName}`);
+
+  await sharp(inputFile)
+    .webp({ quality: 90 })
+    .toFile(join(PHOTOS_DIR, webpName));
+
+  console.log(`Created: photos/${webpName}`);
+
   const htmlContent = await Bun.file(HTML_FILE).text();
 
   const escapedDesc = description.replace(/"/g, '&quot;');
-  const imgTag = `                <img src="/photos/optimized/${outputName}" alt="${escapedDesc}" tabindex="0" title="${escapedDesc}">`;
+  const imgTag = `                <picture>\n                    <source srcset="/photos/optimized/${webpName}" type="image/webp">\n                    <img src="/photos/optimized/${outputName}" alt="${escapedDesc}" tabindex="0" title="${escapedDesc}" loading="lazy" decoding="async">\n                </picture>`;
 
   const marker = '<div class="photos" data-photos-container>';
   const insertPoint = htmlContent.indexOf(marker) + marker.length;
@@ -96,7 +103,7 @@ async function main() {
   console.log(`HTML added to: photos/index.html`);
   console.log();
   console.log("Don't forget to commit your changes:");
-  console.log(`  git add photos/${outputName} photos/optimized/${outputName} photos/index.html`);
+  console.log(`  git add photos/${outputName} photos/${webpName} photos/optimized/${outputName} photos/optimized/${webpName} photos/index.html`);
   console.log(`  git commit -m "Add photo: ${description}"`);
 }
 

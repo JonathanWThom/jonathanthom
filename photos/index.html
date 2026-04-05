@@ -13,12 +13,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Photos by Jonathan Thom from the Pacific Northwest and beyond.">
     <meta name="author" content="Jonathan Thom">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com; connect-src 'self' ws: wss: https://www.google-analytics.com https://www.googletagmanager.com;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com; connect-src 'self' ws: wss: https://www.google-analytics.com https://www.googletagmanager.com;">
     <title>Jonathan Thom - Photos</title>
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png">
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
     <link rel="stylesheet" href="/common.css">
     <link rel="stylesheet" href="/photos.css">
 </head>
@@ -30,22 +29,70 @@
                 <a href="/" class="home-link">Home</a>
             </nav>
             <div class="photos" data-photos-container>
-                <img src="/photos/optimized/IMG_0931.jpg" alt="Oscar jumping through the water in front of Little Squalicum Pier in Bellingham, WA, as the sun sets." tabindex="0" title="Oscar jumping through the water in front of Little Squalicum Pier in Bellingham, WA, as the sun sets.">
-                <img src="/photos/optimized/IMG_3249.jpg" alt="Coleman Glacier on Mount Baker, as seen from Heliotrope Ridge." tabindex="0" title="Coleman Glacier on Mount Baker, as seen from Heliotrope Ridge.">
-                <img src="/photos/optimized/IMG_0216.jpg" alt="A very curious and photogenic Red-crested Cardinal on Kauai." tabindex="0" title="A very curious and photogenic Red-crested Cardinal on Kauai.">
-                <img src="/photos/optimized/E3725A1B-105B-43D2-B532-6F37F8255801.jpg" tabindex="0" alt="Sunset at the corner of Holly and Bay in Bellingham, WA." title="Sunset at the corner of Holly and Bay in Bellingham, WA.">
-                <img src="/photos/optimized/IMG_3761.jpg" alt="Mount Shuksan rising above the trees in Washington." tabindex="0" title="Mount Shuksan rising above the trees in Washington.">
-                <img src="/photos/optimized/IMG_8186.jpg" alt="A heron and a ferry in the background, on Lopez Island, WA." tabindex="0" title="A heron and a ferry in the background, on Lopez Island, WA.">
-                <img src="/photos/optimized/IMG_5271.jpg" alt="Sunset over the Pacific, as seen from Guanacaste Province, Costa Rica." tabindex="0" title="Sunset over the Pacific, as seen from Guanacaste Province, Costa Rica.">
-                <img src="/photos/optimized/IMG_0636.jpg" alt="The bluest blue you've ever seen, at Crater Lake, Oregon." tabindex="0" title="The bluest blue you've ever seen, at Crater Lake, Oregon.">
-                <img src="/photos/optimized/IMG_4791.jpg" alt="The countless love locks on Hohenzollern Bridge in Cologne, Germany." tabindex="0" title="The countless love locks on Hohenzollern Bridge in Cologne, Germany.">
-                <img src="/photos/optimized/IMG_1028.jpg" alt="Sunset over San Francisco." tabindex="0" title="Sunset over San Francisco.">
-                <img src="/photos/optimized/IMG_0867.jpg" alt="Bits of ice floating in the water near Aialik Glacier in Kenai Fjords National Park, Alaska." tabindex="0" title="Bits of ice floating in the water near Aialik Glacier in Kenai Fjords National Park, Alaska.">
-                <img src="/photos/optimized/IMG_8192.jpg" alt="A Washington State Ferry somewhere near the San Juan Islands, with Mount Baker in the background." tabindex="0" title="A Washington State Ferry somewhere near the San Juan Islands, with Mount Baker in the background.">
-                <img src="/photos/optimized/IMG_3066.jpg" alt="Sun peaking through the clouds over Hanalei Bay, Kauai." tabindex="0" title="Sun peaking through the clouds over Hanalei Bay, Kauai.">
-                <img src="/photos/optimized/IMG_1404.jpg" alt="The Northern Lights over Bellingham, WA." tabindex="0" title="The Northern Lights over Bellingham, WA.">
-                <img src="/photos/optimized/IMG_0496.jpg" alt="Fishing boats in the fog on the shore of Port Townsend, WA." tabindex="0" title="Fishing boats in the fog on the shore of Port Townsend, WA.">
-                <img src="/photos/optimized/IMG_7229.jpg" alt="Dark clouds above a red barn near Kalispell, Montana, the Rocky Mountains in the background." tabindex="0" title="Dark clouds above a red barn near Kalispell, Montana, the Rocky Mountains in the background.">
+                <picture>
+                    <source srcset="/photos/optimized/IMG_0931.webp" type="image/webp">
+                    <img src="/photos/optimized/IMG_0931.jpg" alt="Oscar jumping through the water in front of Little Squalicum Pier in Bellingham, WA, as the sun sets." tabindex="0" title="Oscar jumping through the water in front of Little Squalicum Pier in Bellingham, WA, as the sun sets." decoding="async">
+                </picture>
+                <picture>
+                    <source srcset="/photos/optimized/IMG_3249.webp" type="image/webp">
+                    <img src="/photos/optimized/IMG_3249.jpg" alt="Coleman Glacier on Mount Baker, as seen from Heliotrope Ridge." tabindex="0" title="Coleman Glacier on Mount Baker, as seen from Heliotrope Ridge." decoding="async">
+                </picture>
+                <picture>
+                    <source srcset="/photos/optimized/IMG_0216.webp" type="image/webp">
+                    <img src="/photos/optimized/IMG_0216.jpg" alt="A very curious and photogenic Red-crested Cardinal on Kauai." tabindex="0" title="A very curious and photogenic Red-crested Cardinal on Kauai." loading="lazy" decoding="async">
+                </picture>
+                <picture>
+                    <source srcset="/photos/optimized/E3725A1B-105B-43D2-B532-6F37F8255801.webp" type="image/webp">
+                    <img src="/photos/optimized/E3725A1B-105B-43D2-B532-6F37F8255801.jpg" tabindex="0" alt="Sunset at the corner of Holly and Bay in Bellingham, WA." title="Sunset at the corner of Holly and Bay in Bellingham, WA." loading="lazy" decoding="async">
+                </picture>
+                <picture>
+                    <source srcset="/photos/optimized/IMG_3761.webp" type="image/webp">
+                    <img src="/photos/optimized/IMG_3761.jpg" alt="Mount Shuksan rising above the trees in Washington." tabindex="0" title="Mount Shuksan rising above the trees in Washington." loading="lazy" decoding="async">
+                </picture>
+                <picture>
+                    <source srcset="/photos/optimized/IMG_8186.webp" type="image/webp">
+                    <img src="/photos/optimized/IMG_8186.jpg" alt="A heron and a ferry in the background, on Lopez Island, WA." tabindex="0" title="A heron and a ferry in the background, on Lopez Island, WA." loading="lazy" decoding="async">
+                </picture>
+                <picture>
+                    <source srcset="/photos/optimized/IMG_5271.webp" type="image/webp">
+                    <img src="/photos/optimized/IMG_5271.jpg" alt="Sunset over the Pacific, as seen from Guanacaste Province, Costa Rica." tabindex="0" title="Sunset over the Pacific, as seen from Guanacaste Province, Costa Rica." loading="lazy" decoding="async">
+                </picture>
+                <picture>
+                    <source srcset="/photos/optimized/IMG_0636.webp" type="image/webp">
+                    <img src="/photos/optimized/IMG_0636.jpg" alt="The bluest blue you've ever seen, at Crater Lake, Oregon." tabindex="0" title="The bluest blue you've ever seen, at Crater Lake, Oregon." loading="lazy" decoding="async">
+                </picture>
+                <picture>
+                    <source srcset="/photos/optimized/IMG_4791.webp" type="image/webp">
+                    <img src="/photos/optimized/IMG_4791.jpg" alt="The countless love locks on Hohenzollern Bridge in Cologne, Germany." tabindex="0" title="The countless love locks on Hohenzollern Bridge in Cologne, Germany." loading="lazy" decoding="async">
+                </picture>
+                <picture>
+                    <source srcset="/photos/optimized/IMG_1028.webp" type="image/webp">
+                    <img src="/photos/optimized/IMG_1028.jpg" alt="Sunset over San Francisco." tabindex="0" title="Sunset over San Francisco." loading="lazy" decoding="async">
+                </picture>
+                <picture>
+                    <source srcset="/photos/optimized/IMG_0867.webp" type="image/webp">
+                    <img src="/photos/optimized/IMG_0867.jpg" alt="Bits of ice floating in the water near Aialik Glacier in Kenai Fjords National Park, Alaska." tabindex="0" title="Bits of ice floating in the water near Aialik Glacier in Kenai Fjords National Park, Alaska." loading="lazy" decoding="async">
+                </picture>
+                <picture>
+                    <source srcset="/photos/optimized/IMG_8192.webp" type="image/webp">
+                    <img src="/photos/optimized/IMG_8192.jpg" alt="A Washington State Ferry somewhere near the San Juan Islands, with Mount Baker in the background." tabindex="0" title="A Washington State Ferry somewhere near the San Juan Islands, with Mount Baker in the background." loading="lazy" decoding="async">
+                </picture>
+                <picture>
+                    <source srcset="/photos/optimized/IMG_3066.webp" type="image/webp">
+                    <img src="/photos/optimized/IMG_3066.jpg" alt="Sun peaking through the clouds over Hanalei Bay, Kauai." tabindex="0" title="Sun peaking through the clouds over Hanalei Bay, Kauai." loading="lazy" decoding="async">
+                </picture>
+                <picture>
+                    <source srcset="/photos/optimized/IMG_1404.webp" type="image/webp">
+                    <img src="/photos/optimized/IMG_1404.jpg" alt="The Northern Lights over Bellingham, WA." tabindex="0" title="The Northern Lights over Bellingham, WA." loading="lazy" decoding="async">
+                </picture>
+                <picture>
+                    <source srcset="/photos/optimized/IMG_0496.webp" type="image/webp">
+                    <img src="/photos/optimized/IMG_0496.jpg" alt="Fishing boats in the fog on the shore of Port Townsend, WA." tabindex="0" title="Fishing boats in the fog on the shore of Port Townsend, WA." loading="lazy" decoding="async">
+                </picture>
+                <picture>
+                    <source srcset="/photos/optimized/IMG_7229.webp" type="image/webp">
+                    <img src="/photos/optimized/IMG_7229.jpg" alt="Dark clouds above a red barn near Kalispell, Montana, the Rocky Mountains in the background." tabindex="0" title="Dark clouds above a red barn near Kalispell, Montana, the Rocky Mountains in the background." loading="lazy" decoding="async">
+                </picture>
             </div>
         </div>
     </main>

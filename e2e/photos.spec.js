@@ -1,13 +1,10 @@
 const { test, expect } = require('@playwright/test');
 
 test.describe('Photos page', () => {
-  test.describe.configure({ mode: 'serial' });
-
   test.beforeEach(async ({ page }) => {
     await page.goto('/photos');
     await page.waitForLoadState('networkidle');
     const lightbox = page.locator('[data-lightbox]');
-    // Ensure lightbox is closed before each test
     const isOpen = await lightbox.evaluate(el => el.classList.contains('lightbox-open'));
     if (isOpen) {
       await page.keyboard.press('Escape');
@@ -111,7 +108,7 @@ test.describe('Photos page', () => {
     const photos = page.locator('[data-photos-container] img');
     const firstPhoto = photos.first();
     const firstPhotoSrc = await firstPhoto.getAttribute('src');
-    const firstFilename = firstPhotoSrc.split('/').pop();
+    const firstBaseName = firstPhotoSrc.split('/').pop().replace(/\.[^.]+$/, '');
 
     const lastPhoto = photos.last();
     await lastPhoto.click();
@@ -120,7 +117,7 @@ test.describe('Photos page', () => {
 
     const lightboxImg = page.locator('[data-lightbox-img]');
     const src = await lightboxImg.getAttribute('src');
-    expect(src).toContain(firstFilename);
+    expect(src).toContain(firstBaseName);
   });
 
   test('lightbox has focusable elements', async ({ page }) => {
