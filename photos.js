@@ -3,15 +3,27 @@ const lightboxImg = document.querySelector('[data-lightbox-img]');
 const closeBtn = document.querySelector('[data-lightbox-close]');
 const photosContainer = document.querySelector('[data-photos-container]');
 const images = photosContainer.querySelectorAll('img');
+const pictures = photosContainer.querySelectorAll('picture[data-slug]');
 const announcement = document.querySelector('[data-lightbox-announcement]');
 
 let focusedElementBeforeModal = null;
 let currentIndex = 0;
 
+function getSlug(index) {
+    return images[index].closest('picture[data-slug]').dataset.slug;
+}
+
 function getFullSizeSrc(image) {
     const src = image.currentSrc || image.src;
     const filename = src.split('/').pop();
     return '/photos/' + filename;
+}
+
+function updateUrl(slug) {
+    const path = slug ? '/photos/' + slug + '/' : '/photos/';
+    if (window.location.pathname !== path) {
+        history.pushState({ slug: slug || null }, '', path);
+    }
 }
 
 function preloadAdjacentImages(index) {
@@ -47,6 +59,7 @@ function showImage(index) {
         announcement.textContent = `Image ${currentIndex + 1} of ${images.length}: ${image.alt}`;
     }
 
+    updateUrl(getSlug(currentIndex));
     preloadAdjacentImages(currentIndex);
 }
 
@@ -64,6 +77,7 @@ function closeLightbox() {
     lightbox.classList.remove('lightbox-open');
     lightboxImg.src = '';
     lightboxImg.alt = '';
+    updateUrl(null);
 
     if (focusedElementBeforeModal) {
         focusedElementBeforeModal.focus();
@@ -98,6 +112,25 @@ function handleKeyDown(e) {
     }
 }
 
+function findImageBySlug(slug) {
+    const picture = photosContainer.querySelector(`picture[data-slug="${slug}"]`);
+    return picture ? picture.querySelector('img') : null;
+}
+
+function openFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('photo') || extractSlugFromPath();
+    if (slug) {
+        const image = findImageBySlug(slug);
+        if (image) openLightbox(image);
+    }
+}
+
+function extractSlugFromPath() {
+    const match = window.location.pathname.match(/^\/photos\/([^/]+)/);
+    return match ? match[1] : null;
+}
+
 photosContainer.addEventListener('click', (e) => {
     if (e.target.tagName === 'IMG' && e.target.closest('[data-photos-container]')) {
         openLightbox(e.target);
@@ -127,3 +160,27 @@ lightbox.addEventListener('click', (e) => {
         closeLightbox();
     }
 });
+
+window.addEventListener('popstate', (e) => {
+    if (e.state && e.state.slug) {
+        const image = findImageBySlug(e.state.slug);
+        if (image) {
+            if (!lightbox.classList.contains('lightbox-open')) {
+                openLightbox(image);
+            } else {
+                currentIndex = Array.from(images).indexOf(image);
+                showImage(currentIndex);
+            }
+        }
+    } else if (lightbox.classList.contains('lightbox-open')) {
+        lightbox.classList.remove('lightbox-open');
+        lightboxImg.src = '';
+        lightboxImg.alt = '';
+        if (focusedElementBeforeModal) {
+            focusedElementBeforeModal.focus();
+        }
+        document.removeEventListener('keydown', handleKeyDown);
+    }
+});
+
+openFromUrl();

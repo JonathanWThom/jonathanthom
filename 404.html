@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - Jonathan Thom</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+    <link rel="stylesheet" href="/common.css">
+    <script>
+      (function() {
+        var path = window.location.pathname;
+        var match = path.match(/^\/photos\/([^/]+)/);
+        if (match) {
+          window.location.replace('/photos/?photo=' + match[1]);
+          return;
+        }
+      })();
+    </script>
+</head>
+<body>
+    <main>
+        <div class="container">
+            <h1>Page Not Found</h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/photos/">Photos</a>
+            </nav>
+        </div>
+    </main>
+</body>
+</html>

@@ -4,6 +4,17 @@ import sharp from 'sharp';
 import { basename, join, dirname } from 'path';
 import { existsSync } from 'fs';
 
+function slugify(text) {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+    .slice(0, 60)
+    .replace(/-$/, '');
+}
+
 const QUALITY = 85;
 const WIDTH = 1200;
 const PROJECT_DIR = dirname(dirname(import.meta.path));
@@ -88,7 +99,8 @@ async function main() {
   const htmlContent = await Bun.file(HTML_FILE).text();
 
   const escapedDesc = description.replace(/"/g, '&quot;');
-  const imgTag = `                <picture>\n                    <source srcset="/photos/optimized/${webpName}" type="image/webp">\n                    <img src="/photos/optimized/${outputName}" alt="${escapedDesc}" tabindex="0" title="${escapedDesc}" loading="lazy" decoding="async">\n                </picture>`;
+  const slug = slugify(description);
+  const imgTag = `                <picture data-slug="${slug}">\n                    <source srcset="/photos/optimized/${webpName}" type="image/webp">\n                    <img src="/photos/optimized/${outputName}" alt="${escapedDesc}" tabindex="0" title="${escapedDesc}" loading="lazy" decoding="async">\n                </picture>`;
 
   const marker = '<div class="photos" data-photos-container>';
   const insertPoint = htmlContent.indexOf(marker) + marker.length;
