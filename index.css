@@ -11,3 +11,24 @@ h2 {
     font-weight: 400;
     color: var(--color-text-muted);
 }
+
+.nav-primary {
+    flex-direction: row;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.nav-elsewhere {
+    flex-flow: row wrap;
+    gap: 0.4rem 1.2rem;
+}
+
+.nav-elsewhere a {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+}
+
+.nav-elsewhere a:hover,
+.nav-elsewhere a:focus-visible {
+    color: var(--color-accent);
+}

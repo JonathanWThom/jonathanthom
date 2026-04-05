@@ -14,7 +14,7 @@ test.describe('Responsive design', () => {
       test('homepage renders correctly', async ({ page }) => {
         await page.goto('/');
         await expect(page.locator('h1')).toBeVisible();
-        await expect(page.locator('nav')).toBeVisible();
+        await expect(page.locator('nav').first()).toBeVisible();
       });
 
       test('photos page renders correctly', async ({ page }) => {

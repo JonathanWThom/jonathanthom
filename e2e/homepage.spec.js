@@ -15,14 +15,16 @@ test.describe('Homepage', () => {
   });
 
   test('has navigation links', async ({ page }) => {
-    const nav = page.locator('nav');
-    await expect(nav.locator('a')).toHaveCount(10);
+    await expect(page.locator('nav a')).toHaveCount(10);
 
-    await expect(nav.getByRole('link', { name: 'Now' })).toHaveAttribute('href', 'now');
-    await expect(nav.getByRole('link', { name: 'Photos' })).toHaveAttribute('href', 'photos');
-    await expect(nav.getByRole('link', { name: 'Email' })).toHaveAttribute('href', 'mailto:me@jonathanthom.com');
-    await expect(nav.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/jonathanwthom');
-    await expect(nav.getByRole('link', { name: 'PGP Key' })).toHaveAttribute('href', 'pgp/jonathanthom.asc');
+    const primary = page.locator('.nav-primary');
+    await expect(primary.getByRole('link', { name: 'Now' })).toHaveAttribute('href', 'now');
+    await expect(primary.getByRole('link', { name: 'Photos' })).toHaveAttribute('href', 'photos');
+
+    const elsewhere = page.locator('.nav-elsewhere');
+    await expect(elsewhere.getByRole('link', { name: 'Email' })).toHaveAttribute('href', 'mailto:me@jonathanthom.com');
+    await expect(elsewhere.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/jonathanwthom');
+    await expect(elsewhere.getByRole('link', { name: 'PGP Key' })).toHaveAttribute('href', 'pgp/jonathanthom.asc');
   });
 
   test('photos link navigates to photos page', async ({ page }) => {
