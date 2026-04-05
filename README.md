@@ -16,9 +16,8 @@ bun dev                   # Dev server with auto-reload
 bun start                 # Production server
 
 # Testing & Linting
-bun run ci                # Run all tests
-bun test                  # Unit tests
-bun run test:e2e          # E2E tests (includes accessibility)
+bun run ci                # Lint + test
+bun run test              # E2E tests (includes accessibility)
 bun run lint              # Run linters
 
 # Images
