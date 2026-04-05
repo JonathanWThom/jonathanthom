@@ -6,7 +6,7 @@
   "scripts": {
     "setup": "bun install && bun x playwright install --with-deps chromium",
     "start": "serve",
-    "dev": "browser-sync start --config bs-config.js",
+    "dev": "bun --watch scripts/dev-server.js",
     "test": "bun x playwright test",
     "test:ui": "bun x playwright test --ui",
     "test:headed": "bun x playwright test --headed",
@@ -28,9 +28,8 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.11.0",
     "@playwright/test": "^1.57.0",
-    "browser-sync": "^3.0.4",
     "htmlhint": "^1.8.0",
-"sharp": "^0.34.5",
+    "sharp": "^0.34.5",
     "stylelint": "^17.6.0",
     "stylelint-config-standard": "^40.0.0"
   }
