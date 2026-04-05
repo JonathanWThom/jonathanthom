@@ -6,7 +6,6 @@
   "scripts": {
     "setup": "bun install && bun x playwright install --with-deps chromium",
     "start": "bun scripts/dev-server.js",
-    "dev": "bun --watch scripts/dev-server.js",
     "test": "bun x playwright test",
     "test:ui": "bun x playwright test --ui",
     "test:headed": "bun x playwright test --headed",

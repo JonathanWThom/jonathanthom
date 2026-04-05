@@ -12,8 +12,7 @@ Source code for [jonathanthom.com](https://jonathanthom.com).
 
 ```bash
 # Development
-bun dev                   # Dev server with auto-reload
-bun start                 # Production server
+bun start                 # Dev server with live reload
 
 # Testing & Linting
 bun run ci                # Lint + test
