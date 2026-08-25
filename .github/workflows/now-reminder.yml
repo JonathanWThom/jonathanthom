@@ -10,7 +10,7 @@ jobs:
     name: Check if /now is stale
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Check last entry date
         run: |
           LAST_DATE=$(grep -oP 'datetime="\K[0-9-]+' now/index.html | head -1)
